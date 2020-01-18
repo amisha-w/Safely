@@ -22,6 +22,8 @@ import dns
 import os
 from dotenv import load_dotenv
 from twilio.rest import Client
+import geocoder
+
 
 client = pymongo.MongoClient("mongodb+srv://"+str(os.getenv("USER"))+":"+str(os.getenv("PASSWORD"))+"@devcluster-qbbgy.mongodb.net/Sahyog?retryWrites=true&w=majority")
 db = client.Sahyog
@@ -34,15 +36,22 @@ def safey(request):
    return render(request, 'myView/safeRoute.html')
 
 
-def SOS(request):
+def SOS(request):    
+    g = geocoder.ip('me')
+    print(g.latlng)
     myphnos =['+918657181141','+918879272265']   
+   
+    
     for i in myphnos:
         to = i
         client = Client(os.getenv('TWILIO_ACCOUNT_SID'), os.getenv('TWILIO_AUTH_TOKEN'))
         response = client.messages.create(
-        body='helo it me :)', 
+        body='helo it me :)'+'http://www.google.com/maps/place/21.186,72.7641', 
         to=to, from_=os.getenv('TWILIO_PHONE_NUMBER'))
+
     return render(request, 'myView/sos.html')
+
+
 
 
 

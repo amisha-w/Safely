@@ -217,10 +217,13 @@
             var crimeLocation;
             var coodsLat = [];
             var coodsLng = [];
-
+            var currLat;
+            var currLong;
 
             navigator.geolocation.getCurrentPosition(function (location) {
                 latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+                currLat = location.coords.latitude;
+                currLong = location.coords.longitude;
                 mymap = L.map('mapid').setView(latlng, 13)
                 mymap.locate({ watch: true });
 
@@ -324,7 +327,11 @@
                 var $form = $(this),
                     url = $form.attr('action');
                 var paramArr = $("#SOSForm").serializeArray();
-                paramArr.push({ name: "test", value: "lalala" });
+                currCoods = currLat.toString() + "," + currLong.toString();
+
+                paramArr.push({ name: "coords", value: currCoods });
+                console.log("hello");
+                console.log(currCoods);
 
                 $.post(url, $.param(paramArr), function (result) {
                     alert('success');
