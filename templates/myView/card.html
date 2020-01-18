@@ -44,6 +44,20 @@
   }
 </style>
 <body>
+
+<!-- Modal -->
+<div class="modal fade" style="background-color: #1D1D1D;" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+      <h2>SOS Alert has been sent. Help is Arriving.</h2>
+      <p>Your location has been sent to the registered numbers and official authorities.</p>
+      </div>
+      
+    </div>
+  </div>
+</div>
   <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
     <!-- Navbar content -->
     <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
@@ -69,7 +83,7 @@
         <div class="card text-white bg-warning mb-3 mx-auto" style="max-width: 18rem;">
           <div class="card-body">
             <h4 class="card-title">Safe Route</h4>
-            <a href="/settings/"  class="invi stretched-link"><span class="invi"></span></a>
+            <a href="/safey/"  class="invi stretched-link"><span class="invi"></span></a>
             <p class="card-text">View safe routes to reach a destination; or mark an area as unsafe for women.</p>
           </div>
         </div>
@@ -83,7 +97,7 @@
         <div class="card text-white bg-danger mb-3 mx-auto" style="max-width: 18rem;">
           <div class="card-body">
             <h4 class="card-title">SOS Emergency</h4>
-            <a href="/settings/"  class="invi stretched-link"><span class="invi"></span></a>
+            <a data-toggle="modal" data-target="#exampleModalCenter"  class="invi stretched-link"><span class="invi"></span></a>
             <p class="card-text">Send an automatic 100 call and alert registered near ones.</p>
           </div>
         </div>

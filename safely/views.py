@@ -31,7 +31,8 @@ users = db.Location
 
 
 # Create your views here.
-
+def safey(request):
+   return render(request, 'myView/safeRoute.html')
 
 
 def SOS(request):
