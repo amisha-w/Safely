@@ -83,62 +83,8 @@
             <div class="header">
             </div>
             <div id="page-inner">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div id="custom-map-controls"></div>
-                                <form id="SafeRoutesForm">
-                                    {% csrf_token %}
-                                    <div id="src" style="background-color: blue; height: 100px;">Enter Source</div>
-                                    <input class="form-control" type="text" name="location1" id="location1" readonly>
-                                    <div id="dest" style="background-color:red; height: 100px;">Enter Destination</div>
-                                    <input class="form-control" type="text" name="location2" id="location2" readonly>
-                                    <input type="button" onclick="saferoutesfunc()" class="btn btn-dark"
-                                        value="Find Route"
-                                        style="background-color: #323232; color:white; font-size: 20px; width: 300px;">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" onclick="showStoredRoutes()">Show me map</button>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
 
-                            <div id="mapid1" class="panel-body" style="height: 500px;;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
 
-                            <div id="mapid2" class="panel-body" style="height: 500px;;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-
-                            <div id="mapid3" class="panel-body" style="height: 500px;;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <form id="SOSForm" action="{% url 'SOS' %}" method="POST">
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-dark"
-                                        style="background-color: #323232; color:white; font-size: 20px; width: 300px;">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="row">
                         <div class="col-md-12">
@@ -148,7 +94,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
 
                         <div class="col-md-12">
@@ -159,7 +104,7 @@
 
                                 <div class="panel-body" style="background-color: #FFCF40">
 
-                                    <form id="reportcrime" action="{% url 'index' %}" method="POST">
+                                    <form id="reportcrime" action="{% url 'markUnsafe' %}" method="POST">
                                         {% csrf_token %}
                                         <label for="crimeLocation">Crime Location </label>
                                         <input class="form-control" type="text" name="location" id="location" readonly>
@@ -213,7 +158,7 @@
 
         <script>
             var latlng;
-            var mymap, mymap2;
+            var mymap;
             var crimeLocation;
             var coodsLat = [];
             var coodsLng = [];
@@ -232,32 +177,9 @@
 
 
                 var searchControl = new L.esri.Controls.Geosearch().addTo(mymap);
-                var searchControl2 = new L.esri.Controls.Geosearch().addTo(mymap);
+
                 var results = new L.LayerGroup().addTo(mymap);
-                $(document).ready(function () {
 
-                    var newParent = document.getElementById('src');
-                    var newParent2 = document.getElementById('dest');
-                    var oldParent = document.getElementsByClassName("leaflet-top leaflet-left")
-                    var i = 1;
-                    while (oldParent[0].childNodes.length > 0) {
-                        if (i == 1) {
-                            newParent.appendChild(oldParent[0].childNodes[0]);
-                            //newParent2.appendChild(oldParent[0].childNodes[0]);
-                            i++;
-                        }
-                        if (i == 2) {
-                            newParent.appendChild(oldParent[0].childNodes[0]);
-                            i++;
-                        }
-                        if (i == 3) {
-                            newParent2.appendChild(oldParent[0].childNodes[0]);
-                            i++;
-                        }
-
-                    }
-                    $(".leaflet-control-zoom").css("display", "none");
-                });
 
                 searchControl.on('results', function (data) {
                     //results.clearLayers();
@@ -267,44 +189,40 @@
                         coodsLat.push(data.results[i].latlng.lat);
                         coodsLng.push(data.results[i].latlng.lng);
                         console.log(data.results[i]);
-                        document.getElementById("location1").value = data.results[i].text;
-                        srcCood = { "lat": data.results[i].latlng.lat, "lng": data.results[i].latlng.lng }
+                        document.getElementById("location").value = data.results[i].text;
+                        crimeLocation = { "lat": data.results[i].latlng.lat, "lng": data.results[i].latlng.lng }
                     }
                 });
 
-                searchControl2.on('results', function (data) {
-                    //results.clearLayers();
-                    for (var i = data.results.length - 1; i >= 0; i--) {
 
-                        destMarker = L.marker(data.results[i].latlng);
-                        results.addLayer(destMarker);
-                        coodsLat.push(data.results[i].latlng.lat);
-                        coodsLng.push(data.results[i].latlng.lng);
-                        console.log(data.results[i]);
-                        document.getElementById("location2").value = data.results[i].text;
-                        destCood = { "lat": data.results[i].latlng.lat, "lng": data.results[i].latlng.lng }
-                    }
-                });
 
                 L.marker(latlng).addTo(mymap);
 
 
             });
-            var LeafIcon = L.Icon.extend({
-                options: {
-
-                    iconSize: [40, 55],
-                    shadowSize: [50, 64],
-                    iconAnchor: [22, 94],
-                    shadowAnchor: [4, 62],
-                    popupAnchor: [-3, -76]
-                }
-            });
-            var greenIcon = new LeafIcon({ iconUrl: "{% static 'images/green.png' %}" }),
-                redIcon = new LeafIcon({ iconUrl: "{% static 'images/red.png' %}" }),
-                orangeIcon = new LeafIcon({ iconUrl: 'leaf-orange.png' });
 
 
+            if (typeof (EventSource) !== "undefined") {
+                var source = new EventSource("{% url 'random' %}");
+
+                source.onmessage = function (event) {
+
+                    console.log((JSON.parse(event.data)));
+                    JSON.parse(event.data).forEach((item, index) => {
+                        if (!coodsLat.includes(item.lat) && !coodsLng.includes(item.lng)) {
+                            console.log('nope');
+                            coodsLat.push(item.lat);
+                            coodsLng.push(item.lng);
+                            var temp = new L.LatLng(item.lat, item.lng);
+                            L.marker(temp).addTo(mymap);
+                        }
+
+                    });
+
+                };
+            } else {
+                console.log("Error");
+            }
 
             $(document).on('submit', '#reportcrime', function (event) {
                 event.preventDefault();
@@ -331,30 +249,8 @@
                 });
                 return false;
             });
-            var storedRoutes = [];
+
             function saferoutesfunc() {
-                if (typeof (EventSource) !== "undefined") {
-                    var source = new EventSource("{% url 'random' %}");
-
-                    source.onmessage = function (event) {
-
-                        console.log((JSON.parse(event.data)));
-                        JSON.parse(event.data).forEach((item, index) => {
-                            if (!coodsLat.includes(item.lat) && !coodsLng.includes(item.lng)) {
-                                console.log('nope');
-                                coodsLat.push(item.lat);
-                                coodsLng.push(item.lng);
-                                var temp = new L.LatLng(item.lat, item.lng);
-
-                                L.marker(temp, { icon: redIcon }).addTo(mymap);
-                            }
-
-                        });
-
-                    };
-                } else {
-                    console.log("Error");
-                }
                 var HttpClient = function () {
                     this.get = function (aUrl, aCallback) {
                         var anHttpRequest = new XMLHttpRequest();
@@ -397,27 +293,22 @@
                     colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black'];
                     j = 0;
                     routes.forEach(function (item, index) {
-                        if (index <= 2) {
-                            console.log(index);
-                            myroute = item.leg[0].maneuver;
-                            //console.log(myroute);
-                            latlngs = []
-                            storedRoutes[index] = myroute;
-                            myroute.forEach(function (item, index) {
-                                console.log(item.instruction);
-                                console.log(item.position.latitude + " , " + item.position.longitude)
-                                var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
-                                L.marker(routeMarker).addTo(mymap);
-                                latlngs.push([item.position.latitude, item.position.longitude])
-                                var polyline = L.polyline(latlngs, { color: colors[j] }).addTo(mymap);
-                                // zoom the map to the polyline
-                                mymap.fitBounds(polyline.getBounds());
-                            });
+                        console.log(index);
+                        myroute = item.leg[0].maneuver;
+                        //console.log(myroute);
+                        latlngs = []
+                        myroute.forEach(function (item, index) {
+                            console.log(item.instruction);
+                            console.log(item.position.latitude + " , " + item.position.longitude)
+                            var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                            L.marker(routeMarker).addTo(mymap);
+                            latlngs.push([item.position.latitude, item.position.longitude])
+                            var polyline = L.polyline(latlngs, { color: colors[j] }).addTo(mymap);
+                            // zoom the map to the polyline
+                            mymap.fitBounds(polyline.getBounds());
+                        });
 
-                            j++;
-
-                        }
-
+                        j++;
 
 
                     });
@@ -425,80 +316,6 @@
 
 
                 });
-            }
-            function showStoredRoutes() {
-                //route1
-                mymap1 = L.map('mapid1').setView(latlng, 13)
-                mymap1.locate({ watch: true });
-
-                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-                }).addTo(mymap1);
-                L.control.scale().addTo(mymap1);
-
-                myroute = storedRoutes[0];
-                //console.log(myroute);
-                latlngs = [];
-                myroute.forEach(function (item, index) {
-                    console.log(item.instruction);
-                    console.log(item.position.latitude + " , " + item.position.longitude)
-                    var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
-                    L.marker(routeMarker).addTo(mymap1);
-                    latlngs.push([item.position.latitude, item.position.longitude])
-                    var polyline = L.polyline(latlngs, { color: colors[0] }).addTo(mymap1);
-                    // zoom the map to the polyline
-                    mymap1.fitBounds(polyline.getBounds());
-                });
-                //route2
-                mymap2 = L.map('mapid2').setView(latlng, 13)
-                mymap2.locate({ watch: true });
-
-                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-                }).addTo(mymap2);
-                L.control.scale().addTo(mymap2);
-
-                myroute = storedRoutes[1];
-                //console.log(myroute);
-                latlngs = [];
-                myroute.forEach(function (item, index) {
-                    console.log(item.instruction);
-                    console.log(item.position.latitude + " , " + item.position.longitude)
-                    var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
-                    L.marker(routeMarker).addTo(mymap2);
-                    latlngs.push([item.position.latitude, item.position.longitude])
-                    var polyline = L.polyline(latlngs, { color: colors[1] }).addTo(mymap2);
-                    // zoom the map to the polyline
-                    mymap2.fitBounds(polyline.getBounds());
-                });
-
-                //route3
-                mymap3 = L.map('mapid3').setView(latlng, 13)
-                mymap3.locate({ watch: true });
-
-                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-                }).addTo(mymap3);
-                L.control.scale().addTo(mymap3);
-
-                myroute = storedRoutes[2];
-                //console.log(myroute);
-                latlngs = [];
-                myroute.forEach(function (item, index) {
-                    console.log(item.instruction);
-                    console.log(item.position.latitude + " , " + item.position.longitude)
-                    var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
-                    L.marker(routeMarker).addTo(mymap3);
-                    latlngs.push([item.position.latitude, item.position.longitude])
-                    var polyline = L.polyline(latlngs, { color: colors[2] }).addTo(mymap3);
-                    // zoom the map to the polyline
-                    mymap3.fitBounds(polyline.getBounds());
-                });
-
-
             }
         </script>
 
