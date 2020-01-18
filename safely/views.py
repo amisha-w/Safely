@@ -67,7 +67,7 @@ def home(request):
 def settings(request):
    return render(request, 'myView/settings.html')
 
-def safeRoutes(request):
+def markUnsafe(request):
     if request.method == "POST":
         location = request.POST.get('location')
         lat = request.POST.get('lat')
@@ -78,7 +78,9 @@ def safeRoutes(request):
         location = {"lat": lat, "lng": lng, "location": location }
         users.insert_one(location)        
         return HttpResponse(json.dumps({'status':'success','latitude':lat,'longitude':lng}),content_type='application/json')
-        
     else:
-        return render(request,'myView/safeRoutes.html')
+        return render(request, 'myView/markUnsafe.html')
+
+def safeRoutes(request):
+    return render(request,'myView/safeRoutes.html')
 
