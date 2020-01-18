@@ -2,101 +2,135 @@
 {% load static %}
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
+Hi {{ user.username }}!
 
 {% endif %}
 {% endblock %}
 <html>
+
 <head>
-    <title>Safely</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'style.css'%}">
+  <title>Safely</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'style.css'%}">
 </head>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
+
+  jQuery(document).ready(function ($) {
+
     tab = $('.tabs h3 a');
 
-    tab.on('click', function(event) {
-        event.preventDefault();
-        tab.removeClass('active');
-        $(this).addClass('active');
+    tab.on('click', function (event) {
+      event.preventDefault();
+      tab.removeClass('active');
+      $(this).addClass('active');
 
-        tab_content = $(this).attr('href');
-        $('div[id$="tab-content"]').removeClass('active');
-        $(tab_content).addClass('active');
+      tab_content = $(this).attr('href');
+      $('div[id$="tab-content"]').removeClass('active');
+      $(tab_content).addClass('active');
     });
-});
+  });
+  function myFunction() {
+    var txt;
+    var otp = prompt("Please the OTP:", "");
+    if (otp == null || otp == "") {
+      txt = "Re-submit details.";
+    } else {
+      txt = "";
+    }
+    document.getElementById("otpwarn").innerHTML = txt;
+    document.getElementById("otpwarn").style.color = "red";
+  }
 </script>
 
 <body>
-    <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
-        <!-- Navbar content -->
-        <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'features' %}">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'settings' %}">Settings</a>
-            </li>
-          </ul>
+  <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
+    <!-- Navbar content -->
+    <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'features' %}">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container row">
+    <div class="jumbotron col-lg-6 mx-auto" style="background: rgba(255,255,255,0);">
+      <h1 class="display-4"><span><img style="height: 50px; width: 50px;"
+            src="{% static 'women-rights.svg'%}"></span>Safely</h1>
+      <p class="lead">Safely helps women to navigate routes in a safe manner by providing three main features: <span
+          class="pinkify">safe routes, timer alert</span> and<span class="pinkify"> SOS alerts to near ones.</span> </p>
+      <hr class="my-4">
+      <p>Allows users to mark a place as Unsafe, and displays safer routes, with timer alerts for emergency</p>
+
+    </div>
+
+
+    <div class="form-wrap">
+      <div class="tabs">
+        <h3 class="signup-tab"><a class="active" style="text-decoration: none;" href="#signup-tab-content">Sign Up</a>
+        </h3>
+        <h3 class="login-tab"><a style="text-decoration: none;" href="#login-tab-content">Login</a></h3>
+      </div>
+      <!--.tabs-->
+
+      <div class="tabs-content">
+        <div id="signup-tab-content" class="active">
+          <form class="signup-form" action="" method="post">
+            {% csrf_token %}
+            <input type="tel" class="input " placeholder="Phone" name="phone2" pattern="[0-9]{10}" required>
+            <!-- <input type="tel" class="input " placeholder="OTP" name="otp"  pattern="[0-9]" required> -->
+            <input type="Password" class="input" placeholder="Password" name="password2" required>
+            <input type="submit" onclick="myFunction()" class="btn" value="Sign Up">
+          </form>
+          <!--.login-form-->
+          <div class="help-text">
+            <p id="otpwarn">If you're already a member, Log In to the site.</p>
+          </div>
+          <!--.help-text-->
         </div>
-      </nav>
-<div class="container row">
- <div class="jumbotron col-lg-6 mx-auto" style="background: rgba(255,255,255,0);">
-  <h1 class="display-4"><span><img style="height: 50px; width: 50px;" src="{% static 'women-rights.svg'%}"></span>Safely</h1>
-  <p class="lead">Safely helps women to navigate routes in a safe manner by providing three main features: <span class="pinkify">safe routes, timer alert</span> and<span class="pinkify"> SOS alerts to near ones.</span> </p>
-  <hr class="my-4">
-  <p>Allows users to mark a place as Unsafe, and displays safer routes, with timer alerts for emergency</p>
-  
-</div>
+        <!--.signup-tab-content-->
 
+        <div id="login-tab-content">
+          <form class="login-form" action="" method="post">
+            {% csrf_token %}
+            <input type="tel" class="input " placeholder="Phone" name="phone1" pattern="[0-9]{10}" required>
+            <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
 
-<div class="form-wrap">
-        <div class="tabs">
-            <h3 class="signup-tab"><a class="active" style="text-decoration: none;" href="#signup-tab-content">Sign Up</a></h3>
-            <h3 class="login-tab"><a style="text-decoration: none;" href="#login-tab-content">Login</a></h3>
-        </div><!--.tabs-->
+            <input type="submit" class="btn" value="Login">
+          </form>
+          <!--.login-form-->
+          <div class="help-text">
+            <p><a href="#">If you're a new member, Sign Up for the site.</a></p>
+          </div>
+          <!--.help-text-->
+        </div>
+        <!--.login-tab-content-->
+      </div>
+      <!--.tabs-content-->
+    </div>
+    <!--.form-wrap-->
 
-        <div class="tabs-content">
-            <div id="signup-tab-content" class="active">
-                <form class="signup-form" action="" method="post">
-                  {% csrf_token %}
-                    <input type="tel" class="input " placeholder="Phone" name="phone2"  pattern="[0-9]{10}" required>
-                    <input type="tel" class="input " placeholder="OTP" name="otp"  pattern="[0-9]" required>
-                    <input type="Password" class="input" placeholder="Password" name="password2" required>
-                    <input type="submit" class="btn" value="Sign Up">
-                </form><!--.login-form-->
-                <div class="help-text">
-                    <p>If you're already a member, Log In to the site.</p>
-                </div><!--.help-text-->
-            </div><!--.signup-tab-content-->
-
-            <div id="login-tab-content">
-                <form class="login-form" action="" method="post">
-                  {% csrf_token %}
-                    <input type="tel" class="input " placeholder="Phone" name="phone1"  pattern="[0-9]{10}" required>
-                    <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
-
-                    <input type="submit" class="btn" value="Login">
-                </form><!--.login-form-->
-                <div class="help-text">
-                    <p><a href="#">If you're a new member, Sign Up for the site.</a></p>
-                </div><!--.help-text-->
-            </div><!--.login-tab-content-->
-        </div><!--.tabs-content-->
-    </div><!--.form-wrap-->
-
-</div>
-</div>
+  </div>
+  </div>
 </body>
+
 </html>
