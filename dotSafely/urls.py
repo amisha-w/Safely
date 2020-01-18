@@ -26,5 +26,9 @@ urlpatterns = [
     path('safeRoutes/', views.safeRoutes, name ='safeRoutes'),
     path('SOS/', views.SOS, name ='SOS'),
     path('random/', views.random, name ='random'),
-    path('markUnsafe/', views.markUnsafe, name ='markUnsafe')
+
+    path('markUnsafe/', views.markUnsafe, name ='markUnsafe'),
+
+    path('safey/', views.safey, name ='safey'),
+
 ]
