@@ -4,6 +4,18 @@ a {
   a:hover {
     color: #4FDA8C; }
 
+
+.edit{
+      height: 38px;
+      width: 28px;
+      margin-left: 5px;;
+    }
+
+input[readonly]{
+      background-color:transparent;
+      border: 0;
+    }
+
 .form-wrap {
   background-color: #fff;
   width: 320px;

@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 {% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+
+{% endif %}
+{% endblock %}
 <html>
 <head>
     <title>Safely</title>
@@ -30,62 +36,30 @@
     <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
         <!-- Navbar content -->
         <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" style="background-color: #F2F2F2;" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'features' %}">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+            </li>
+          </ul>
+        </div>
       </nav>
 <div class="container row">
  <div class="jumbotron col-lg-6 mx-auto" style="background: rgba(255,255,255,0);">
-  <h1 class="display-4">Safely</h1>
+  <h1 class="display-4"><span><img style="height: 50px; width: 50px;" src="{% static 'women-rights.svg'%}"></span>Safely</h1>
   <p class="lead">Safely helps women to navigate routes in a safe manner by providing three main features: <span class="pinkify">safe routes, timer alert</span> and<span class="pinkify"> SOS alerts to near ones.</span> </p>
   <hr class="my-4">
   <p>Allows users to mark a place as Unsafe, and displays safer routes, with timer alerts for emergency</p>
   
 </div>
-<!-- <div class="card col-lg-3  mx-auto" >
-  <div class="card-body">
-    
-    <h2>Login</h2>
-    <p class="card-text">If you're a new member, Sign Up for the site.</p>
-    <form class="contact-form" action="" method="POST">
-                           
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control " placeholder="Phone" name="phone1"  pattern="[0-9]{10}" required>
-                                <br>
-                            
-                                <label>Password</label>
-                                <input type="Password" class="form-control" placeholder="Password" name="password1" required>
-                                <br>
-                            
-                            <label></label><br>
-                            <a href="#" class="btn btn-primary center-block">Submit</a>
-                        
-    </form>
-</div>
-</div> -->
-<!-- <div class="card col-lg-5 mx-auto" >
-  <div class="card-body"> -->
- 
-<!--     <h2>Sign Up</h2>
-    <p class="card-text">If you're already a member, Log In to the site.</p>
-    <form class="contact-form" action="" method="POST">
-                           
-                                <label>Phone Number</label>
-                                <input type="tel" class="form-control " placeholder="Phone" name="phone2"  pattern="[0-9]{10}" required>
-                                <br>
-                            
-                                <label>OTP</label>
-                                <input type="tel" class="form-control " placeholder="OTP" name="otp"  pattern="[0-9]" required>
-                                <br>
-                                <label>Password</label>
-                                <input type="Password" class="form-control" placeholder="Password" name="password2" required>
-                                <br>
-                           
-                            <label></label><br>
-                            <a href="#" class="btn btn-primary center-block">Submit</a>
-                       
-    </form> -->
+
 
 <div class="form-wrap">
         <div class="tabs">
@@ -96,6 +70,7 @@
         <div class="tabs-content">
             <div id="signup-tab-content" class="active">
                 <form class="signup-form" action="" method="post">
+                  {% csrf_token %}
                     <input type="tel" class="input " placeholder="Phone" name="phone2"  pattern="[0-9]{10}" required>
                     <input type="tel" class="input " placeholder="OTP" name="otp"  pattern="[0-9]" required>
                     <input type="Password" class="input" placeholder="Password" name="password2" required>
@@ -108,6 +83,7 @@
 
             <div id="login-tab-content">
                 <form class="login-form" action="" method="post">
+                  {% csrf_token %}
                     <input type="tel" class="input " placeholder="Phone" name="phone1"  pattern="[0-9]{10}" required>
                     <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
 
