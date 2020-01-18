@@ -1,11 +1,31 @@
+<!DOCTYPE html>
 {% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+Hi {{ user.username }}!
 
-<html lang="en">
+{% endif %}
+{% endblock %}
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Safely</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'style.css'%}">
+
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
@@ -24,138 +44,92 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{% static 'scripts/index.js' %}"></script>
-    <title>Sahyog</title>
-    <!-- Bootstrap Styles-->
-    <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
-    <!-- FontAwesome Styles-->
-    <link href="{% static 'assets/css/font-awesome.css' %}" rel="stylesheet" />
+    
 
-    <!-- Custom Styles-->
-    <link href="{% static 'assets/css/custom-styles.css' %}" rel="stylesheet" />
-    <!-- Google Fonts-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
+<style>
+    
+    h4{
+        margin-top: 30px;
+    }
+.whitey{
+    padding: 30px;
+    padding-top: 50px;
+    left:0;
+    width: 30%;
+    text-align: center;
+    height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  margin-top: 60px;
+}
+#mapid{
+    right: 0;
+    height: 100%;
+    width: 70%;;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  margin-top: 60px;
+}
 
+</style>
 <body>
-    <div id="wrapper">
-        <nav class="navbar navbar-default top-navbar" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html"><strong>Sahyog</strong></a>
-                <!-- <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div> -->
-            </div>
-        </nav>
-        <!--/. NAV TOP  -->
-        <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse">
-                <br><br>
-                <ul class="nav" id="main-menu">
-                    <li>
-                        <a class="active-menu" href="index.html"><i class="fa fa-dashboard"></i> Report Crime</a>
-                    </li>
-                    <li>
-                        <a href="ui-elements.html"><i class="fa fa-desktop"></i>Validate Crime</a>
-                    </li>
-                    <li>
-                        <a href="tab-panel.html"><i class="fa fa-qrcode"></i>Police Stations Near Me</a>
-                    </li>
-                    <li>
-                        <a href="chart.html"><i class="fa fa-bar-chart-o"></i> My History</a>
-                    </li>
-
-                    <!--  <li>
-                        <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
-                    </li> -->
-                    <li>
-                        <a href="form.html"><i class="fa fa-edit"></i> Give Feedback </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!-- /. NAV SIDE  -->
-
-        <div id="page-wrapper">
-            <div class="header">
-            </div>
-            <div id="page-inner">
-
-
-                <div class="row">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div id="mapid" class="panel-body">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" style="background-color: #323232; color: white;">
-                                    Crime Details
-                                </div>
-
-                                <div class="panel-body" style="background-color: #FFCF40">
-
-                                    <form id="reportcrime" action="{% url 'markUnsafe' %}" method="POST">
-                                        {% csrf_token %}
-                                        <label for="crimeLocation">Crime Location </label>
-                                        <input class="form-control" type="text" name="location" id="location" readonly>
-                                        <br>
-                                        <label for="crimeType">Choose Crime Type*</label>
-                                        <select name="crimeType" class="form-control">
-                                            <option>Theft</option>
-                                            <option>Assault</option>
-                                            <option>Bombing</option>
-                                            <option>Burglary</option>
-                                            <option>Disturbance of Peace</option>
-                                            <option>Alcohol Violations</option>
-                                            <option>Fraud</option>
-                                            <option>Homicide</option>
-                                            <option>Vehicle Theft</option>
-                                            <option>Robery</option>
-                                            <option>Sex Crimes</option>
-                                        </select>
-                                        <br>
-
-                                        <label for="crimeLevel">Choose Crime Severity Level (1-least severe)</label><br>
-
-                                        <label class="radio-inline"><input type="radio" name="crimeLevel"
-                                                checked>1</label>
-                                        <label class="radio-inline"><input type="radio" name="crimeLevel">2</label>
-                                        <label class="radio-inline"><input type="radio" name="crimeLevel">3</label>
-                                        <br><br>
-                                        <label for="crimeImage">Upload Crime Photo (Optional)</label><br>
-                                        <button class="btn btn-dark" type="button" name="crimeImage"
-                                            style="background-color: #323232; color:white;">Choose File</button>
-                                        <br><br>
-
-                                        <div class="form-group">
-                                            <label for="crimeDetails">Additional Details (Optional)</label>
-                                            <textarea class="form-control" rows="4" name="crimeDetails"></textarea>
-                                        </div>
-                                        <br>
-                                        <input type="submit" class="btn btn-dark"
-                                            style="background-color: #323232; color:white; font-size: 20px; width: 300px;">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /. PAGE INNER  -->
-            </div>
-            <!-- /. PAGE WRAPPER  -->
+    <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
+        <!-- Navbar content -->
+        <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
+    
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'features' %}">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+            </li>
+            <li style="margin-left: 1100px;" class="nav-item">
+                <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
+              </li>
+          </ul>
         </div>
-        <!-- /. WRAPPER  -->
+      </nav>
+      <div class="whitey" style="background-color: white;">
+        <form id="reportcrime" action="{% url 'markUnsafe' %}" method="POST">
+            {% csrf_token %}
+            <p style="font-size: 25px; margin-top: 60px;">Enter a Location in the searchbox on map to mark it as dangerous.</p>
 
+<input class="form-control" style="margin-top: 20px;" type="text" name="location" id="location" readonly>
+            
+<div class="btn-group">
+    <button type="button" style="font-size: 20px; margin-top: 20px;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Type of Danger
+    </button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#">Deserted Area</a>
+      <a class="dropdown-item" href="#">Witnessed Crime</a>
+      <a class="dropdown-item" href="#">Eve Teasing</a>
+      
+    </div>
+    
+  </div>
+
+           
+  <textarea class="form-control" style="margin-top: 20px;" type="text">Description of unsafe experience.</textarea>
+            <input type="submit" class="btn btn-dark"
+                style="margin-top: 20px; color:white; font-size: 20px; width: 300px;">
+        </form>
+      </div>
+
+                <div id="mapid" class="panel-body"></div>
+
+
+           
         <script>
             var latlng;
             var mymap;

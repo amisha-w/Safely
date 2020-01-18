@@ -17,7 +17,7 @@ span{
     font-size: 200px;
     color:black;
 }
-.btn{
+.btn-dark{
     margin: 10px;
     font-size: 30px;
 }
@@ -97,6 +97,9 @@ function reset(){
         <li class="nav-item">
           <a class="nav-link" href="{% url 'settings' %}">Settings</a>
         </li>
+        <li style="margin-left: 1100px;" class="nav-item">
+            <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
+          </li>
       </ul>
     </div>
   </nav>

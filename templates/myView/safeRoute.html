@@ -49,7 +49,32 @@ Hi {{ user.username }}!
 </head>
 
 <style>
-    
+#mapid2info,#mapid1info,#mapid3info{
+background-color: white;
+color: black;
+padding: 10px;
+font-size: 15px;
+}
+
+
+    * {
+  box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+  height: 800px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
     h4{
         margin-top: 30px;
     }
@@ -60,8 +85,8 @@ Hi {{ user.username }}!
     left:0;
     width: 30%;
     height: 100%;
-  position: fixed;
-  z-index: 1;
+  position:absolute;
+  /* z-index: 1; */
   top: 0;
   overflow-x: hidden;
   margin-top: 60px;
@@ -70,11 +95,15 @@ Hi {{ user.username }}!
     right: 0;
     height: 100%;
     width: 70%;;
-  position: fixed;
-  z-index: 1;
+  position: absolute;
+  /* z-index: 1; */
   top: 0;
   overflow-x: hidden;
   margin-top: 60px;
+}
+#mapid1,#mapid2,#mapid3{
+    border-style: solid;
+  border-color: black;
 }
 
 </style>
@@ -96,6 +125,9 @@ Hi {{ user.username }}!
         <li class="nav-item">
           <a class="nav-link" href="{% url 'settings' %}">Settings</a>
         </li>
+        <li style="margin-left: 1100px;" class="nav-item">
+            <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
+          </li>
       </ul>
     </div>
   </nav>
@@ -104,27 +136,44 @@ Hi {{ user.username }}!
         
         <form id="SafeRoutesForm">
             {% csrf_token %}
-            <div id="src"  ><h4>Enter Source:</h4> </div>
+            <div id="src"  ><h4 >Enter Source:</h4> </div>
             
             <div id="dest"  ><h4>Enter Destination:</h4> </div>
-            
+            <br><br>
             <input type="button" onclick="saferoutesfunc()" class="btn"
                 value="Find Route"
                 style="margin-top: 30px; color:white; font-size: 20px; width: 300px;">
-                <input type="button" id="butn" onclick="" class="btn"
+                <!-- <input type="button" id="butn" onclick="" class="btn"
                 value="View All Routes"
-                style="margin-top: 30px; color:white; font-size: 20px; width: 300px; display:none;">
+                style="margin-top: 30px; color:white; font-size: 20px; width: 300px; display: none;"> -->
+                <button type="button" id="butn" class="btn" style="margin-top: 30px; color:white; font-size: 20px; width: 300px; display: none;" onclick="showStoredRoutes()">Show me map</button>
+
         </form>
     
     </div>
     
-            
                 <div id="mapid" class="panel-body">
                 </div>
-           
-      
-   
-    
+               <div class="row" style="background-color: white;">
+                    <div class="column" style="background-color:#aaa;">
+                        <div id="mapid1" class="panel-body" style="height: 100%;">
+                        
+                        </div>
+                        <div id="mapid1info" class="panel-body"style="height: 100%;">nbsXdhbshbd</div>
+                    </div>
+                    <div class="column" style="background-color:#bbb;">
+                        <div id="mapid2" class="panel-body" style="height: 100%;">
+                        </div>
+                        <div id="mapid2info" class="panel-body"style="height: 100%;">nmdfnm</div>
+                    </div>
+                    <div class="column" style="background-color:#ccc;">
+                        <div id="mapid3" class="panel-body" style="height: 100%;">
+                        </div>
+                        <div id="mapid3info" class="panel-body"style="height: 100%;">dsfrdg</div>
+                    </div>
+                  </div>
+                
+              
 
   
 
@@ -134,10 +183,14 @@ Hi {{ user.username }}!
     var crimeLocation;
     var coodsLat = [];
     var coodsLng = [];
+    var currLat;
+    var currLong;
 
 
     navigator.geolocation.getCurrentPosition(function (location) {
         latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+        currLat = location.coords.latitude;
+                currLong = location.coords.longitude;
         mymap = L.map('mapid').setView(latlng, 13)
         mymap.locate({ watch: true });
 
@@ -168,16 +221,18 @@ Hi {{ user.username }}!
                     // h4 = document.createElement("h4");
                     // h4.textContent = "Enter Source:";
                     // newParent.appendChild(h4);
-                    newParent.appendChild(oldParent[0].childNodes[0]);
                     newParent.innerHTML+='<input class="form-control" type="text" name="location1" id="location1" readonly>';
+                    newParent.appendChild(oldParent[0].childNodes[0]);
+
                     i++;
                 }
                 if (i == 3) {
                     // h4 = document.createElement("h4");
                     // h4.textContent = "Enter Destination:";
                     // newParent2.appendChild(h4);
-                    newParent2.appendChild(oldParent[0].childNodes[0]);
                     newParent2.innerHTML+='<input class="form-control" type="text" name="location2" id="location2" readonly>'
+                    newParent2.appendChild(oldParent[0].childNodes[0]);
+
                     i++;
                 }
 
@@ -216,7 +271,33 @@ Hi {{ user.username }}!
 
 
     });
+    var LeafIcon = L.Icon.extend({
+                options: {
 
+                    iconSize: [40, 55],
+                    shadowSize: [50, 64],
+                    iconAnchor: [22, 94],
+                    shadowAnchor: [4, 62],
+                    popupAnchor: [-3, -76]
+                }
+            });
+            var greenIcon = new LeafIcon({ iconUrl: "{% static 'images/green.png' %}" }),
+                redIcon = new LeafIcon({ iconUrl: "{% static 'images/red.png' %}" }),
+                orangeIcon = new LeafIcon({ iconUrl: 'leaf-orange.png' });
+
+        
+                $(document).on('submit', '#reportcrime', function (event) {
+                event.preventDefault();
+                var $form = $(this),
+                    url = $form.attr('action');
+                var paramArr = $("#reportcrime").serializeArray();
+                paramArr.push({ name: "lat", value: crimeLocation.lat });
+                paramArr.push({ name: "lng", value: crimeLocation.lng });
+                $.post(url, $.param(paramArr), function (result) {
+                    alert('success');
+                });
+                return false;
+            });
 
     if (typeof (EventSource) !== "undefined") {
         var source = new EventSource("{% url 'random' %}");
@@ -265,7 +346,7 @@ Hi {{ user.username }}!
         });
         return false;
     });
-
+var storedRoutes = [];
     function saferoutesfunc() {
         document.getElementById("butn").style.display = "inline";
         var HttpClient = function () {
@@ -314,6 +395,7 @@ Hi {{ user.username }}!
                 myroute = item.leg[0].maneuver;
                 //console.log(myroute);
                 latlngs = []
+                storedRoutes[index] = myroute;
                 myroute.forEach(function (item, index) {
                     console.log(item.instruction);
                     console.log(item.position.latitude + " , " + item.position.longitude)
@@ -334,6 +416,81 @@ Hi {{ user.username }}!
 
         });
     }
+    function showStoredRoutes() {
+                //route1
+                mymap1 = L.map('mapid1').setView(latlng, 13)
+                mymap1.locate({ watch: true });
+
+                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                    maxZoom: 20,
+                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+                }).addTo(mymap1);
+                L.control.scale().addTo(mymap1);
+
+                myroute = storedRoutes[0];
+                //console.log(myroute);
+                latlngs = [];
+                myroute.forEach(function (item, index) {
+                    console.log(item.instruction);
+                    console.log(item.position.latitude + " , " + item.position.longitude)
+                    var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                    L.marker(routeMarker).addTo(mymap1);
+                    latlngs.push([item.position.latitude, item.position.longitude])
+                    var polyline = L.polyline(latlngs, { color: colors[0] }).addTo(mymap1);
+                    // zoom the map to the polyline
+                    mymap1.fitBounds(polyline.getBounds());
+                });
+                //route2
+                mymap2 = L.map('mapid2').setView(latlng, 13)
+                mymap2.locate({ watch: true });
+
+                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                    maxZoom: 20,
+                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+                }).addTo(mymap2);
+                L.control.scale().addTo(mymap2);
+
+                myroute = storedRoutes[1];
+                //console.log(myroute);
+                latlngs = [];
+                
+                myroute.forEach(function (item, index) {
+                    console.log(item.instruction);
+                    console.log(item.position.latitude + " , " + item.position.longitude)
+                    var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                    L.marker(routeMarker).addTo(mymap2);
+                    latlngs.push([item.position.latitude, item.position.longitude])
+                    var polyline = L.polyline(latlngs, { color: colors[1] }).addTo(mymap2);
+                    // zoom the map to the polyline
+                    mymap2.fitBounds(polyline.getBounds());
+                });
+
+                //route3
+                mymap3 = L.map('mapid3').setView(latlng, 13)
+                mymap3.locate({ watch: true });
+
+                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                    maxZoom: 20,
+                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+                }).addTo(mymap3);
+                L.control.scale().addTo(mymap3);
+
+                myroute = storedRoutes[2];
+                //console.log(myroute);
+                latlngs = [];
+                myroute.forEach(function (item, index) {
+                    console.log(item.instruction);
+                    console.log(item.position.latitude + " , " + item.position.longitude)
+                    var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                    L.marker(routeMarker).addTo(mymap3);
+                    latlngs.push([item.position.latitude, item.position.longitude])
+                    var polyline = L.polyline(latlngs, { color: colors[2] }).addTo(mymap3);
+                    // zoom the map to the polyline
+                    mymap3.fitBounds(polyline.getBounds());
+                });
+
+
+            }
 </script>
 </body>
 

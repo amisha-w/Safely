@@ -54,8 +54,6 @@ def SOS(request):
 
 
 
-
-
 def random(request):
     locations = dumps(users.find())
     #print(locations)
@@ -86,7 +84,7 @@ def markUnsafe(request):
         load_dotenv()        
         location = {"lat": lat, "lng": lng, "location": location }
         users.insert_one(location)        
-        return HttpResponse(json.dumps({'status':'success','latitude':lat,'longitude':lng}),content_type='application/json')
+        return render(request, 'myView/card.html')
     else:
         return render(request, 'myView/markUnsafe.html')
 

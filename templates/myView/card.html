@@ -55,7 +55,7 @@
     {% csrf_token %}
 </form> -->
 
-<div class="modal fade" id="myModal" style="background-color: #1D1D1D;" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
+<!-- <div class="modal fade" id="myModal" style="background-color: #1D1D1D;" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       
@@ -66,7 +66,7 @@
       
     </div>
   </div>
-</div>
+</div> -->
   <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
     <!-- Navbar content -->
     <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
@@ -81,6 +81,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+        </li>
+        <li style="margin-left: 1100px;" class="nav-item">
+          <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
         </li>
       </ul>
     </div>
@@ -100,7 +103,7 @@
           <div class="card-body">
             <h4 class="card-title">Unsafe</h4>
             
-            <a href="/safey/"  class="invi stretched-link"><span class="invi"></span></a>
+            <a href="/timer"  class="invi stretched-link"><span class="invi"></span></a>
             <p class="card-text">Feeling unsafe & unsure? Set a timer alert that alerts authorities after 10 minutes of inactivity.</p>
           </div>
         </div>
