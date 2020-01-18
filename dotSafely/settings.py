@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from dotenv import load_dotenv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',    
+    'django_twilio'
 ]
 
 MIDDLEWARE = [
@@ -71,14 +72,16 @@ WSGI_APPLICATION = 'dotSafely.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
+# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+load_dotenv()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME': 'Sahyog',
+        'HOST': 'mongodb+srv://{}:{}@devcluster-qbbgy.mongodb.net/Sahyog?retryWrites=true&w=majority'.format(str(os.getenv("USER")), str(os.getenv("PASSWORD"))),
     }
 }
+
 
 
 # Password validation

@@ -1,0 +1,405 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+    <script src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet/0.0.1-beta.5/esri-leaflet.js"></script>
+
+    <script
+        src="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.js"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
+    <link rel="stylesheet" href="{% static 'styles.css'%}">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{% static 'scripts/index.js' %}"></script>
+    <title>Sahyog</title>
+    <!-- Bootstrap Styles-->
+    <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="{% static 'assets/css/font-awesome.css' %}" rel="stylesheet" />
+
+    <!-- Custom Styles-->
+    <link href="{% static 'assets/css/custom-styles.css' %}" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><strong>Sahyog</strong></a>
+                <!-- <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div> -->
+            </div>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <br><br>
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <a class="active-menu" href="index.html"><i class="fa fa-dashboard"></i> Report Crime</a>
+                    </li>
+                    <li>
+                        <a href="ui-elements.html"><i class="fa fa-desktop"></i>Validate Crime</a>
+                    </li>
+                    <li>
+                        <a href="tab-panel.html"><i class="fa fa-qrcode"></i>Police Stations Near Me</a>
+                    </li>
+                    <li>
+                        <a href="chart.html"><i class="fa fa-bar-chart-o"></i> My History</a>
+                    </li>
+
+                    <!--  <li>
+                        <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+                    </li> -->
+                    <li>
+                        <a href="form.html"><i class="fa fa-edit"></i> Give Feedback </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- /. NAV SIDE  -->
+
+        <div id="page-wrapper">
+            <div class="header">
+            </div>
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div id="custom-map-controls"></div>
+                                <form id="SafeRoutesForm">
+                                    {% csrf_token %}
+                                    <div id="src" style="background-color: blue; height: 100px;">Enter Source</div>
+                                    <input class="form-control" type="text" name="location1" id="location1" readonly>
+                                    <div id="dest" style="background-color:red; height: 100px;">Enter Destination</div>
+                                    <input class="form-control" type="text" name="location2" id="location2" readonly>
+                                    <input type="button" onclick="saferoutesfunc()" class="btn btn-dark"
+                                        value="Find Route"
+                                        style="background-color: #323232; color:white; font-size: 20px; width: 300px;">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form id="SOSForm" action="{% url 'SOS' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-dark"
+                                        style="background-color: #323232; color:white; font-size: 20px; width: 300px;">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div id="mapid" class="panel-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" style="background-color: #323232; color: white;">
+                                    Crime Details
+                                </div>
+
+                                <div class="panel-body" style="background-color: #FFCF40">
+
+                                    <form id="reportcrime" action="{% url 'index' %}" method="POST">
+                                        {% csrf_token %}
+                                        <label for="crimeLocation">Crime Location </label>
+                                        <input class="form-control" type="text" name="location" id="location" readonly>
+                                        <br>
+                                        <label for="crimeType">Choose Crime Type*</label>
+                                        <select name="crimeType" class="form-control">
+                                            <option>Theft</option>
+                                            <option>Assault</option>
+                                            <option>Bombing</option>
+                                            <option>Burglary</option>
+                                            <option>Disturbance of Peace</option>
+                                            <option>Alcohol Violations</option>
+                                            <option>Fraud</option>
+                                            <option>Homicide</option>
+                                            <option>Vehicle Theft</option>
+                                            <option>Robery</option>
+                                            <option>Sex Crimes</option>
+                                        </select>
+                                        <br>
+
+                                        <label for="crimeLevel">Choose Crime Severity Level (1-least severe)</label><br>
+
+                                        <label class="radio-inline"><input type="radio" name="crimeLevel"
+                                                checked>1</label>
+                                        <label class="radio-inline"><input type="radio" name="crimeLevel">2</label>
+                                        <label class="radio-inline"><input type="radio" name="crimeLevel">3</label>
+                                        <br><br>
+                                        <label for="crimeImage">Upload Crime Photo (Optional)</label><br>
+                                        <button class="btn btn-dark" type="button" name="crimeImage"
+                                            style="background-color: #323232; color:white;">Choose File</button>
+                                        <br><br>
+
+                                        <div class="form-group">
+                                            <label for="crimeDetails">Additional Details (Optional)</label>
+                                            <textarea class="form-control" rows="4" name="crimeDetails"></textarea>
+                                        </div>
+                                        <br>
+                                        <input type="submit" class="btn btn-dark"
+                                            style="background-color: #323232; color:white; font-size: 20px; width: 300px;">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /. PAGE INNER  -->
+            </div>
+            <!-- /. PAGE WRAPPER  -->
+        </div>
+        <!-- /. WRAPPER  -->
+
+        <script>
+            var latlng;
+            var mymap;
+            var crimeLocation;
+            var coodsLat = [];
+            var coodsLng = [];
+
+
+            navigator.geolocation.getCurrentPosition(function (location) {
+                latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+                mymap = L.map('mapid').setView(latlng, 13)
+                mymap.locate({ watch: true });
+
+                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                    maxZoom: 20,
+                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+                }).addTo(mymap);
+                L.control.scale().addTo(mymap);
+
+
+                var searchControl = new L.esri.Controls.Geosearch().addTo(mymap);
+                var searchControl2 = new L.esri.Controls.Geosearch().addTo(mymap);
+                var results = new L.LayerGroup().addTo(mymap);
+                $(document).ready(function () {
+
+                    var newParent = document.getElementById('src');
+                    var newParent2 = document.getElementById('dest');
+                    var oldParent = document.getElementsByClassName("leaflet-top leaflet-left")
+                    var i = 1;
+                    while (oldParent[0].childNodes.length > 0) {
+                        if (i == 1) {
+                            newParent.appendChild(oldParent[0].childNodes[0]);
+                            //newParent2.appendChild(oldParent[0].childNodes[0]);
+                            i++;
+                        }
+                        if (i == 2) {
+                            newParent.appendChild(oldParent[0].childNodes[0]);
+                            i++;
+                        }
+                        if (i == 3) {
+                            newParent2.appendChild(oldParent[0].childNodes[0]);
+                            i++;
+                        }
+
+                    }
+                    $(".leaflet-control-zoom").css("display", "none");
+                });
+
+                searchControl.on('results', function (data) {
+                    //results.clearLayers();
+                    for (var i = data.results.length - 1; i >= 0; i--) {
+                        srcMarker = L.marker(data.results[i].latlng);
+                        results.addLayer(srcMarker);
+                        coodsLat.push(data.results[i].latlng.lat);
+                        coodsLng.push(data.results[i].latlng.lng);
+                        console.log(data.results[i]);
+                        document.getElementById("location1").value = data.results[i].text;
+                        srcCood = { "lat": data.results[i].latlng.lat, "lng": data.results[i].latlng.lng }
+                    }
+                });
+
+                searchControl2.on('results', function (data) {
+                    //results.clearLayers();
+                    for (var i = data.results.length - 1; i >= 0; i--) {
+
+                        destMarker = L.marker(data.results[i].latlng);
+                        results.addLayer(destMarker);
+                        coodsLat.push(data.results[i].latlng.lat);
+                        coodsLng.push(data.results[i].latlng.lng);
+                        console.log(data.results[i]);
+                        document.getElementById("location2").value = data.results[i].text;
+                        destCood = { "lat": data.results[i].latlng.lat, "lng": data.results[i].latlng.lng }
+                    }
+                });
+
+                L.marker(latlng).addTo(mymap);
+
+
+            });
+
+
+            if (typeof (EventSource) !== "undefined") {
+                var source = new EventSource("{% url 'random' %}");
+
+                source.onmessage = function (event) {
+
+                    console.log((JSON.parse(event.data)));
+                    JSON.parse(event.data).forEach((item, index) => {
+                        if (!coodsLat.includes(item.lat) && !coodsLng.includes(item.lng)) {
+                            console.log('nope');
+                            coodsLat.push(item.lat);
+                            coodsLng.push(item.lng);
+                            var temp = new L.LatLng(item.lat, item.lng);
+                            L.marker(temp).addTo(mymap);
+                        }
+
+                    });
+
+                };
+            } else {
+                console.log("Error");
+            }
+
+            $(document).on('submit', '#reportcrime', function (event) {
+                event.preventDefault();
+                var $form = $(this),
+                    url = $form.attr('action');
+                var paramArr = $("#reportcrime").serializeArray();
+                paramArr.push({ name: "lat", value: crimeLocation.lat });
+                paramArr.push({ name: "lng", value: crimeLocation.lng });
+                $.post(url, $.param(paramArr), function (result) {
+                    alert('success');
+                });
+                return false;
+            });
+
+            $(document).on('submit', '#SOSForm', function (event) {
+                event.preventDefault();
+                var $form = $(this),
+                    url = $form.attr('action');
+                var paramArr = $("#SOSForm").serializeArray();
+                paramArr.push({ name: "test", value: "lalala" });
+
+                $.post(url, $.param(paramArr), function (result) {
+                    alert('success');
+                });
+                return false;
+            });
+
+            function saferoutesfunc() {
+                var HttpClient = function () {
+                    this.get = function (aUrl, aCallback) {
+                        var anHttpRequest = new XMLHttpRequest();
+                        anHttpRequest.onreadystatechange = function () {
+                            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                                aCallback(anHttpRequest.responseText);
+                        }
+
+                        anHttpRequest.open("GET", aUrl, true);
+                        anHttpRequest.send(null);
+                    }
+                }
+                myloc1Lat = srcCood.lat;
+                myloc1Long = srcCood.lng;
+                myloc2Lat = destCood.lat;
+                myloc2Long = destCood.lng;
+                var group = new L.featureGroup([srcMarker, destMarker]);
+
+                mymap.fitBounds(group.getBounds());
+                var geocoderAPISrc = new HttpClient();
+                abc = 'https://route.ls.hereapi.com/routing/7.2/calculateroute.json?waypoint0=' + myloc1Lat + '%2C' + myloc1Long + '&waypoint1=' + myloc2Lat + '%2C' + myloc2Long + '&mode=fastest%3Bcar&alternatives=4&apiKey=N2AFSomTN5V2AoOG6_Lqq8lVFxaKO0uM4H-Y4Q0mWhU'
+                geocoderAPISrc.get(abc, function (response) {
+                    // do something with response
+                    let result = JSON.parse(response);
+                    console.log("Here maps res: ");
+                    routes = result.response.route;
+                    // item = routes[4];
+                    // myroute = item.leg[0].maneuver;
+                    // //console.log(myroute);
+                    // latlngs = [];
+                    // myroute.forEach(function (item, index) {
+                    //     console.log(item.instruction);
+                    //     console.log(item.position.latitude + " , " + item.position.longitude)
+                    //     var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                    //     L.marker(routeMarker).addTo(mymap);
+                    //     latlngs.push([item.position.latitude, item.position.longitude])
+                    // });
+
+
+                    colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black'];
+                    j = 0;
+                    routes.forEach(function (item, index) {
+                        console.log(index);
+                        myroute = item.leg[0].maneuver;
+                        //console.log(myroute);
+                        latlngs = []
+                        myroute.forEach(function (item, index) {
+                            console.log(item.instruction);
+                            console.log(item.position.latitude + " , " + item.position.longitude)
+                            var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                            L.marker(routeMarker).addTo(mymap);
+                            latlngs.push([item.position.latitude, item.position.longitude])
+                            var polyline = L.polyline(latlngs, { color: colors[j] }).addTo(mymap);
+                            // zoom the map to the polyline
+                            mymap.fitBounds(polyline.getBounds());
+                        });
+
+                        j++;
+
+
+                    });
+
+
+
+                });
+            }
+        </script>
+
+</body>
+<!-- JS Scripts-->
+
+<!-- jQuery Js -->
+<script src="{% static 'assets/js/jquery-1.10.2.js' %}"></script>
+<!-- Bootstrap Js -->
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+<!-- Metis Menu Js -->
+<script src="{% static 'assets/js/jquery.metisMenu.js' %}"></script>
+
+<script src="{% static 'assets/js/easypiechart.js' %}"></script>
+<script src="{% static 'assets/js/easypiechart-data.js' %}"></script>
+<script src="{% static 'assets/js/Lightweight-Chart/jquery.chart.js' %}"></script>
+
+<!-- Custom Js -->
+<script src="{% static 'assets/js/custom-scripts.js' %}"></script>
+
+</html>
