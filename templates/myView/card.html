@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="{% static 'style.css'%}">
 </head>
 <script type="text/javascript">
+
+
+
     jQuery(document).ready(function($) {
     tab = $('.tabs h3 a');
 
@@ -24,6 +27,10 @@
         $(tab_content).addClass('active');
     });
 });
+
+
+
+
 </script>
 <style type="text/css">
 .invi{ 
@@ -44,9 +51,11 @@
   }
 </style>
 <body>
+  <!-- <form id="SOSForm" action="{% url 'SOS' %}" method="POST">
+    {% csrf_token %}
+</form> -->
 
-<!-- Modal -->
-<div class="modal fade" style="background-color: #1D1D1D;" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="myModal" style="background-color: #1D1D1D;" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       
@@ -90,14 +99,15 @@
         <div class="card text-white mb-3 mx-auto" style="max-width: 18rem; background-color: #FB4720;">
           <div class="card-body">
             <h4 class="card-title">Unsafe</h4>
-            <a href="/settings/"  class="invi stretched-link"><span class="invi"></span></a>
+            
+            <a href="/safey/"  class="invi stretched-link"><span class="invi"></span></a>
             <p class="card-text">Feeling unsafe & unsure? Set a timer alert that alerts authorities after 10 minutes of inactivity.</p>
           </div>
         </div>
         <div class="card text-white bg-danger mb-3 mx-auto" style="max-width: 18rem;">
           <div class="card-body">
             <h4 class="card-title">SOS Emergency</h4>
-            <a data-toggle="modal" data-target="#exampleModalCenter"  class="invi stretched-link"><span class="invi"></span></a>
+            <a href="/SOS/" class="invi stretched-link"><span class="invi"></span></a>
             <p class="card-text">Send an automatic 100 call and alert registered near ones.</p>
           </div>
         </div>

@@ -27,10 +27,9 @@ client = pymongo.MongoClient("mongodb+srv://"+str(os.getenv("USER"))+":"+str(os.
 db = client.Sahyog
 users = db.Location
 
+def timer(request):
+   return render(request, 'myView/timer.html')
 
-
-
-# Create your views here.
 def safey(request):
    return render(request, 'myView/safeRoute.html')
 
@@ -43,7 +42,7 @@ def SOS(request):
         response = client.messages.create(
         body='helo it me :)', 
         to=to, from_=os.getenv('TWILIO_PHONE_NUMBER'))
-    return HttpResponse("hello")
+    return render(request, 'myView/sos.html')
 
 
 

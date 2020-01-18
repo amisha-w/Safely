@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Safely</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    
+</head>
+<style>
+    
+span{
+    font-size: 200px;
+    color:black;
+}
+.btn{
+    margin: 10px;
+    font-size: 30px;
+}
+</style>
+
+<script>
+    
+    $(document).on('submit', '#SOSForm', function (event) {
+                event.preventDefault();
+                var $form = $(this),
+                    url = $form.attr('action');
+                var paramArr = $("#SOSForm").serializeArray();
+                paramArr.push({ name: "test", value: "lalala" });
+
+                $.post(url, $.param(paramArr), function (result) {
+                    alert('success');
+                });
+                return false;
+            });
+
+var timeElapsed = 0;
+var sec=0,min=0;
+var myTimer;
+
+function tick(){
+    timeElapsed++;
+    if(timeElapsed%100==0){
+        sec += timeElapsed/100;
+    timeElapsed = timeElapsed%100;
+    }
+    if(sec%60==0){
+        min+=sec/60;
+        sec=sec%60;
+    }
+    if(min>=1){
+        stop();
+        document.getElementById('SOSForm').submit();
+    }
+    document.getElementById("sec").innerHTML = sec;
+    document.getElementById("time").innerHTML = timeElapsed;
+    document.getElementById("min").innerHTML = min;
+}
+function start(){
+    //call the first setInterval
+    myTimer = setInterval(tick, 1);
+}
+function stop(){
+    clearInterval(myTimer);
+    document.getElementById("sec").innerHTML = sec;
+    document.getElementById("time").innerHTML = timeElapsed;
+    document.getElementById("min").innerHTML = min;
+}
+
+function reset(){
+    timeElapsed=0,min=0,sec=0;
+    document.getElementById("sec").innerHTML = sec;
+    document.getElementById("time").innerHTML = timeElapsed;
+    document.getElementById("min").innerHTML = min;
+}
+  
+
+</script>
+<body style="color: white; text-align: center;">
+
+  <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
+    <!-- Navbar content -->
+    <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'features' %}">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container " >
+     <form id="SOSForm" action="{% url 'SOS' %}" method="POST">
+    {% csrf_token %}
+</form>
+        <!-- <h1 style="font-size: 200px;" class="display-1"><span id="min">0</span> : <span id="sec">0</span> : <span id="time">0</span></h1> -->
+       
+  <div class="row ">
+      <div class="column-lg-2 mx-auto"><span id="min">0</span></div>
+      <div class="column-lg-2 mx-auto"><span >:</span></div>
+      <div class="column-lg-2 mx-auto"><span id="sec">0</span></div>
+      <div class="column-lg-2 mx-auto"><span >:</span></div>
+      <div class="column-lg-2 mx-auto"><span id="time">0</span></div>
+  </div><br><br>
+      <button class="btn btn-dark" onclick="start()">Start</button>
+              <button class="btn btn-dark" onclick="reset()">Reset</button>
+              <button class="btn btn-dark" onclick="stop()">Stop</button>
+  </div>
+
+</body>
+</html>

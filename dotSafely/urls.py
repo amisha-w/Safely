@@ -27,4 +27,5 @@ urlpatterns = [
     path('SOS/', views.SOS, name ='SOS'),
     path('random/', views.random, name ='random'),
     path('safey/', views.safey, name ='safey'),
+    path('timer/',views.timer,name='timer'),
 ]
