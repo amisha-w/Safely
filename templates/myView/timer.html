@@ -64,6 +64,11 @@
             stop();
             document.getElementById('SOSForm').submit();
         }
+          if (min >=1 && min<=2) {
+            console.log(min);
+            beep();
+         
+        }
         document.getElementById("sec").innerHTML = sec;
         document.getElementById("time").innerHTML = timeElapsed;
         document.getElementById("min").innerHTML = min;
@@ -71,7 +76,16 @@
     function start() {
         //call the first setInterval
         myTimer = setInterval(tick, 1);
+      
+
+         
     }
+       function beep() {
+   
+            var audio = new Audio("{% static 'beep.mp3'%}"); 
+            audio.play();
+    }
+
     function stop() {
         clearInterval(myTimer);
         document.getElementById("sec").innerHTML = sec;
@@ -85,6 +99,8 @@
         document.getElementById("time").innerHTML = timeElapsed;
         document.getElementById("min").innerHTML = min;
     }
+
+    
 
 
 </script>
