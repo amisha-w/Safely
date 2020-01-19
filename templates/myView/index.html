@@ -24,7 +24,7 @@ Hi {{ user.username }}!
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'style.css'%}">
 </head>
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
   jQuery(document).ready(function ($) {
 
@@ -51,7 +51,7 @@ Hi {{ user.username }}!
     document.getElementById("otpwarn").innerHTML = txt;
     document.getElementById("otpwarn").style.color = "red";
   }
-</script>
+</script>-->
 
 <body>
   
@@ -100,26 +100,18 @@ Hi {{ user.username }}!
         <div id="signup-tab-content" class="active">
           <form class="signup-form" action="" method="post">
             {% csrf_token %}
-            <input type="tel" class="input " placeholder="Phone" name="phone2" pattern="[0-9]{10}" required>
+            <input type="text"  class="input" placeholder="Phone" name="phone2" id="number" required>
             <!-- <input type="tel" class="input " placeholder="OTP" name="otp"  pattern="[0-9]" required> -->
-            <input type="Password" class="input" placeholder="Password" name="password2" required>
-            <input type="submit" onclick="myFunction()" class="btn" value="Sign Up">
-          </form>
-          <!--.login-form-->
-          <div class="help-text">
-            <p id="otpwarn">If you're already a member, Log In to the site.</p>
-          </div>
-          <!--.help-text-->
-        </div>
-        <!--.signup-tab-content-->
-
-        <div id="login-tab-content">
-          <form class="login-form" action="" method="post">
-            {% csrf_token %}
-            <input type="tel" class="input " placeholder="Phone" name="phone1" pattern="[0-9]{10}" required>
-            <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
-
-            <input type="submit" class="btn" value="Login">
+            <input type="password" class="input" placeholder="Password" name="password2" required>
+            <div id="recaptcha-container"></div>
+            <br/>
+            <input type="button" onclick="phoneAuth();" class="btn" value="Send OTP">
+            <br/>
+            <input type="text" id="verificationCode" placeholder="Enter OTP">
+            <br/>
+            <input type="button" onclick="myFunction();" class="btn" value="Send OTP">
+          
+           
           </form>
           <!--.login-form-->
           <div class="help-text">
@@ -135,6 +127,41 @@ Hi {{ user.username }}!
 
   </div>
   </div>
+
+<!--
+ The core Firebase JS SDK is always required and must be listed first 
+<script defer src="/__/firebase/7.7.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries 
+
+<!-- Initialize Firebase 
+
+<script defer src="/__/firebase/init.js"></script>
+<script defer src="js/app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.3/firebase-auth.js"></script>
+
+-->
+
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+<script>
+
+    // Your web app's Firebase configuration
+  var firebaseConfig = {
+  apiKey: "AIzaSyBVJi6g6g72BhB5GGeBfWQqQJdO74TSuKE",
+  authDomain: "safely-63b7c.firebaseapp.com",
+  databaseURL: "https://safely-63b7c.firebaseio.com",
+  projectId: "safely-63b7c",
+  storageBucket: "safely-63b7c.appspot.com",
+  messagingSenderId: "665784574278",
+  appId: "1:665784574278:web:6f55d5925ca9749ac84547"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+</script>
+</script>
+<script src="{% static 'authnum.js'%}"></script>
 </body>
 
 </html>
