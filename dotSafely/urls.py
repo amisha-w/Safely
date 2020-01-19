@@ -10,6 +10,7 @@ urlpatterns = [
     path('card/', views.home, name ='features'),
     path('settings/', views.settings, name ='settings'),
     path('safeRoutes/', views.safeRoutes, name ='safeRoutes'),
+    
     path('SOS/', views.SOS, name ='SOS'),
     path('random/', views.random, name ='random'),
     path('markUnsafe/', views.markUnsafe, name ='markUnsafe'),

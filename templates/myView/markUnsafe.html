@@ -9,23 +9,23 @@ Hi {{ user.username }}!
 <html>
 
 <head>
-  <title>Safely</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="{% static 'style.css'%}">
+    <title>Safely</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'style.css'%}">
 
 
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
@@ -44,254 +44,273 @@ Hi {{ user.username }}!
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{% static 'scripts/index.js' %}"></script>
-    
+
 
 </head>
 <style>
-    
-    h4{
+    h4 {
         margin-top: 30px;
     }
-.whitey{
-    padding: 30px;
-    padding-top: 50px;
-    left:0;
-    width: 30%;
-    text-align: center;
-    height: 100%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  margin-top: 60px;
-}
-#mapid{
-    right: 0;
-    height: 100%;
-    width: 70%;;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  margin-top: 60px;
-}
 
+    .whitey {
+        padding: 30px;
+        padding-top: 50px;
+        left: 0;
+        width: 30%;
+        text-align: center;
+        height: 100%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        margin-top: 60px;
+    }
+
+    #mapid {
+        right: 0;
+        height: 100%;
+        width: 70%;
+        ;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        margin-top: 60px;
+    }
 </style>
+
 <body>
     <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
         <!-- Navbar content -->
         <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
-    
+
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'features' %}">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'settings' %}">Settings</a>
-            </li>
-            <li style="margin-left: 1100px;" class="nav-item">
-                <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
-              </li>
-          </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'features' %}">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+                </li>
+                <li style="margin-left: 1100px;" class="nav-item">
+                    <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
+                </li>
+            </ul>
         </div>
-      </nav>
-      <div class="whitey" style="background-color: white;">
+    </nav>
+    <div class="whitey" style="background-color: white;">
         <form id="reportcrime" action="{% url 'markUnsafe' %}" method="POST">
             {% csrf_token %}
-            <p style="font-size: 25px; margin-top: 60px;">Enter a Location in the searchbox on map to mark it as dangerous.</p>
+            <p style="font-size: 25px; margin-top: 60px;">Enter a Location in the searchbox on map to mark it as
+                dangerous.</p>
 
-<input class="form-control" style="margin-top: 20px;" type="text" name="location" id="location" readonly>
-            
-<div class="btn-group">
-    <button type="button" style="font-size: 20px; margin-top: 20px;" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Type of Danger
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Deserted Area</a>
-      <a class="dropdown-item" href="#">Witnessed Crime</a>
-      <a class="dropdown-item" href="#">Eve Teasing</a>
-      
-    </div>
-    
-  </div>
+            <input class="form-control" style="margin-top: 20px;" type="text" name="location" id="location" readonly>
 
-           
-  <textarea class="form-control" style="margin-top: 20px;" type="text">Description of unsafe experience.</textarea>
+            <div class="btn-group">
+                <button type="button" style="font-size: 20px; margin-top: 20px;" class="btn btn-danger dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Type of Danger
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Deserted Area</a>
+                    <a class="dropdown-item" href="#">Witnessed Crime</a>
+                    <a class="dropdown-item" href="#">Eve Teasing</a>
+
+                </div>
+
+            </div>
+
+
+            <textarea class="form-control" style="margin-top: 20px;"
+                type="text">Description of unsafe experience.</textarea>
             <input type="submit" class="btn btn-dark"
                 style="margin-top: 20px; color:white; font-size: 20px; width: 300px;">
         </form>
-      </div>
+    </div>
 
-                <div id="mapid" class="panel-body"></div>
-
-
-           
-        <script>
-            var latlng;
-            var mymap;
-            var crimeLocation;
-            var coodsLat = [];
-            var coodsLng = [];
-
-
-            navigator.geolocation.getCurrentPosition(function (location) {
-                latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
-                mymap = L.map('mapid').setView(latlng, 13)
-                mymap.locate({ watch: true });
-
-                L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-                    maxZoom: 20,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
-                }).addTo(mymap);
-                L.control.scale().addTo(mymap);
-
-
-                var searchControl = new L.esri.Controls.Geosearch().addTo(mymap);
-
-                var results = new L.LayerGroup().addTo(mymap);
-
-
-                searchControl.on('results', function (data) {
-                    //results.clearLayers();
-                    for (var i = data.results.length - 1; i >= 0; i--) {
-                        srcMarker = L.marker(data.results[i].latlng);
-                        results.addLayer(srcMarker);
-                        coodsLat.push(data.results[i].latlng.lat);
-                        coodsLng.push(data.results[i].latlng.lng);
-                        console.log(data.results[i]);
-                        document.getElementById("location").value = data.results[i].text;
-                        crimeLocation = { "lat": data.results[i].latlng.lat, "lng": data.results[i].latlng.lng }
-                    }
-                });
+    <div id="mapid" class="panel-body"></div>
 
 
 
-                L.marker(latlng).addTo(mymap);
+    <script>
+        var latlng;
+        var mymap;
+        var crimeLocation;
+        var coodsLat = [];
+        var coodsLng = [];
 
 
-            });
+        navigator.geolocation.getCurrentPosition(function (location) {
+            latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
+            mymap = L.map('mapid').setView(latlng, 13)
+            mymap.locate({ watch: true });
+
+            L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+            }).addTo(mymap);
+            L.control.scale().addTo(mymap);
 
 
-            if (typeof (EventSource) !== "undefined") {
-                var source = new EventSource("{% url 'random' %}");
+            var searchControl = new L.esri.Controls.Geosearch().addTo(mymap);
 
-                source.onmessage = function (event) {
+            var results = new L.LayerGroup().addTo(mymap);
 
-                    console.log((JSON.parse(event.data)));
-                    JSON.parse(event.data).forEach((item, index) => {
-                        if (!coodsLat.includes(item.lat) && !coodsLng.includes(item.lng)) {
-                            console.log('nope');
-                            coodsLat.push(item.lat);
-                            coodsLng.push(item.lng);
-                            var temp = new L.LatLng(item.lat, item.lng);
-                            L.marker(temp).addTo(mymap);
-                        }
 
-                    });
-
-                };
-            } else {
-                console.log("Error");
-            }
-
-            $(document).on('submit', '#reportcrime', function (event) {
-                event.preventDefault();
-                var $form = $(this),
-                    url = $form.attr('action');
-                var paramArr = $("#reportcrime").serializeArray();
-                paramArr.push({ name: "lat", value: crimeLocation.lat });
-                paramArr.push({ name: "lng", value: crimeLocation.lng });
-                $.post(url, $.param(paramArr), function (result) {
-                    alert('success');
-                });
-                return false;
-            });
-
-            $(document).on('submit', '#SOSForm', function (event) {
-                event.preventDefault();
-                var $form = $(this),
-                    url = $form.attr('action');
-                var paramArr = $("#SOSForm").serializeArray();
-                paramArr.push({ name: "test", value: "lalala" });
-
-                $.post(url, $.param(paramArr), function (result) {
-                    alert('success');
-                });
-                return false;
-            });
-
-            function saferoutesfunc() {
-                var HttpClient = function () {
-                    this.get = function (aUrl, aCallback) {
-                        var anHttpRequest = new XMLHttpRequest();
-                        anHttpRequest.onreadystatechange = function () {
-                            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
-                                aCallback(anHttpRequest.responseText);
-                        }
-
-                        anHttpRequest.open("GET", aUrl, true);
-                        anHttpRequest.send(null);
-                    }
+            searchControl.on('results', function (data) {
+                //results.clearLayers();
+                for (var i = data.results.length - 1; i >= 0; i--) {
+                    srcMarker = L.marker(data.results[i].latlng);
+                    results.addLayer(srcMarker);
+                    coodsLat.push(data.results[i].latlng.lat);
+                    coodsLng.push(data.results[i].latlng.lng);
+                    console.log(data.results[i]);
+                    document.getElementById("location").value = data.results[i].text;
+                    crimeLocation = { "lat": data.results[i].latlng.lat, "lng": data.results[i].latlng.lng }
                 }
-                myloc1Lat = srcCood.lat;
-                myloc1Long = srcCood.lng;
-                myloc2Lat = destCood.lat;
-                myloc2Long = destCood.lng;
-                var group = new L.featureGroup([srcMarker, destMarker]);
-
-                mymap.fitBounds(group.getBounds());
-                var geocoderAPISrc = new HttpClient();
-                abc = 'https://route.ls.hereapi.com/routing/7.2/calculateroute.json?waypoint0=' + myloc1Lat + '%2C' + myloc1Long + '&waypoint1=' + myloc2Lat + '%2C' + myloc2Long + '&mode=fastest%3Bcar&alternatives=4&apiKey=N2AFSomTN5V2AoOG6_Lqq8lVFxaKO0uM4H-Y4Q0mWhU'
-                geocoderAPISrc.get(abc, function (response) {
-                    // do something with response
-                    let result = JSON.parse(response);
-                    console.log("Here maps res: ");
-                    routes = result.response.route;
-                    // item = routes[4];
-                    // myroute = item.leg[0].maneuver;
-                    // //console.log(myroute);
-                    // latlngs = [];
-                    // myroute.forEach(function (item, index) {
-                    //     console.log(item.instruction);
-                    //     console.log(item.position.latitude + " , " + item.position.longitude)
-                    //     var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
-                    //     L.marker(routeMarker).addTo(mymap);
-                    //     latlngs.push([item.position.latitude, item.position.longitude])
-                    // });
+            });
 
 
-                    colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black'];
-                    j = 0;
-                    routes.forEach(function (item, index) {
-                        console.log(index);
-                        myroute = item.leg[0].maneuver;
-                        //console.log(myroute);
-                        latlngs = []
-                        myroute.forEach(function (item, index) {
-                            console.log(item.instruction);
-                            console.log(item.position.latitude + " , " + item.position.longitude)
-                            var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
-                            L.marker(routeMarker).addTo(mymap);
-                            latlngs.push([item.position.latitude, item.position.longitude])
-                            var polyline = L.polyline(latlngs, { color: colors[j] }).addTo(mymap);
-                            // zoom the map to the polyline
-                            mymap.fitBounds(polyline.getBounds());
-                        });
 
-                        j++;
+            L.marker(latlng).addTo(mymap);
 
 
+        });
+        var LeafIcon = L.Icon.extend({
+            options: {
+
+                iconSize: [40, 55],
+                shadowSize: [50, 64],
+                iconAnchor: [22, 94],
+                shadowAnchor: [4, 62],
+                popupAnchor: [-3, -76]
+            }
+        });
+        var greenIcon = new LeafIcon({ iconUrl: "{% static 'images/green.png' %}" }),
+            redIcon = new LeafIcon({ iconUrl: "{% static 'images/red.png' %}" }),
+            orangeIcon = new LeafIcon({ iconUrl: 'leaf-orange.png' });
+
+
+
+        if (typeof (EventSource) !== "undefined") {
+            var source = new EventSource("{% url 'random' %}");
+
+            source.onmessage = function (event) {
+
+                console.log((JSON.parse(event.data)));
+                JSON.parse(event.data).forEach((item, index) => {
+                    if (!coodsLat.includes(item.lat) && !coodsLng.includes(item.lng)) {
+                        console.log('nope');
+                        coodsLat.push(item.lat);
+                        coodsLng.push(item.lng);
+                        var temp = new L.LatLng(item.lat, item.lng);
+                        L.marker(temp, { icon: redIcon }).addTo(mymap);
+                    }
+
+                });
+
+            };
+        } else {
+            console.log("Error");
+        }
+
+        $(document).on('submit', '#reportcrime', function (event) {
+            event.preventDefault();
+            var $form = $(this),
+                url = $form.attr('action');
+            var paramArr = $("#reportcrime").serializeArray();
+            paramArr.push({ name: "lat", value: crimeLocation.lat });
+            paramArr.push({ name: "lng", value: crimeLocation.lng });
+            $.post(url, $.param(paramArr), function (result) {
+                alert('success');
+            });
+            return false;
+        });
+
+        $(document).on('submit', '#SOSForm', function (event) {
+            event.preventDefault();
+            var $form = $(this),
+                url = $form.attr('action');
+            var paramArr = $("#SOSForm").serializeArray();
+            paramArr.push({ name: "test", value: "lalala" });
+
+            $.post(url, $.param(paramArr), function (result) {
+                alert('success');
+            });
+            return false;
+        });
+
+        function saferoutesfunc() {
+            var HttpClient = function () {
+                this.get = function (aUrl, aCallback) {
+                    var anHttpRequest = new XMLHttpRequest();
+                    anHttpRequest.onreadystatechange = function () {
+                        if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+                            aCallback(anHttpRequest.responseText);
+                    }
+
+                    anHttpRequest.open("GET", aUrl, true);
+                    anHttpRequest.send(null);
+                }
+            }
+            myloc1Lat = srcCood.lat;
+            myloc1Long = srcCood.lng;
+            myloc2Lat = destCood.lat;
+            myloc2Long = destCood.lng;
+            var group = new L.featureGroup([srcMarker, destMarker]);
+
+            mymap.fitBounds(group.getBounds());
+            var geocoderAPISrc = new HttpClient();
+            abc = 'https://route.ls.hereapi.com/routing/7.2/calculateroute.json?waypoint0=' + myloc1Lat + '%2C' + myloc1Long + '&waypoint1=' + myloc2Lat + '%2C' + myloc2Long + '&mode=fastest%3Bcar&alternatives=4&apiKey=N2AFSomTN5V2AoOG6_Lqq8lVFxaKO0uM4H-Y4Q0mWhU'
+            geocoderAPISrc.get(abc, function (response) {
+                // do something with response
+                let result = JSON.parse(response);
+                console.log("Here maps res: ");
+                routes = result.response.route;
+                // item = routes[4];
+                // myroute = item.leg[0].maneuver;
+                // //console.log(myroute);
+                // latlngs = [];
+                // myroute.forEach(function (item, index) {
+                //     console.log(item.instruction);
+                //     console.log(item.position.latitude + " , " + item.position.longitude)
+                //     var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                //     L.marker(routeMarker).addTo(mymap);
+                //     latlngs.push([item.position.latitude, item.position.longitude])
+                // });
+
+
+                colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black'];
+                j = 0;
+                routes.forEach(function (item, index) {
+                    console.log(index);
+                    myroute = item.leg[0].maneuver;
+                    //console.log(myroute);
+                    latlngs = []
+                    myroute.forEach(function (item, index) {
+                        console.log(item.instruction);
+                        console.log(item.position.latitude + " , " + item.position.longitude)
+                        var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                        L.marker(routeMarker).addTo(mymap);
+                        latlngs.push([item.position.latitude, item.position.longitude])
+                        var polyline = L.polyline(latlngs, { color: colors[j] }).addTo(mymap);
+                        // zoom the map to the polyline
+                        mymap.fitBounds(polyline.getBounds());
                     });
 
+                    j++;
 
 
                 });
-            }
-        </script>
+
+
+
+            });
+        }
+    </script>
 
 </body>
 <!-- JS Scripts-->
