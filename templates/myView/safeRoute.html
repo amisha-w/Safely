@@ -86,9 +86,9 @@ Hi {{ user.username }}!
     .whitey {
         padding: 30px;
         padding-top: 50px;
-        text-align: center;
+
         left: 0;
-        width: 30%;
+        width: 40%;
         height: 100%;
         position: absolute;
         /* z-index: 1; */
@@ -100,7 +100,7 @@ Hi {{ user.username }}!
     #mapid {
         right: 0;
         height: 100%;
-        width: 70%;
+        width: 60%;
         ;
         position: absolute;
         /* z-index: 1; */
@@ -129,7 +129,7 @@ Hi {{ user.username }}!
                     <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'features' %}">Features</a>
+                    <a class="nav-link" href="{% url 'card' %}">Features</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'settings' %}">Settings</a>
@@ -154,7 +154,7 @@ Hi {{ user.username }}!
             </div>
             <br><br>
             <input type="button" onclick="saferoutesfunc()" class="btn" value="Find Route"
-                style="margin-top: 30px; color:white; font-size: 20px; width: 300px;">
+                style="margin-top: 30px; color:white; font-size: 20px; width: 180px;">
             <!-- <input type="button" id="butn" onclick="" class="btn"
                 value="View All Routes"
                 style="margin-top: 30px; color:white; font-size: 20px; width: 300px; display: none;"> -->
@@ -300,6 +300,19 @@ Hi {{ user.username }}!
             });
             return false;
         });
+        var LeafIcon = L.Icon.extend({
+            options: {
+
+                iconSize: [40, 55],
+                shadowSize: [50, 64],
+                iconAnchor: [22, 94],
+                shadowAnchor: [4, 62],
+                popupAnchor: [-3, -76]
+            }
+        });
+        var greenIcon = new LeafIcon({ iconUrl: "{% static 'images/green.png' %}" }),
+            redIcon = new LeafIcon({ iconUrl: "{% static 'images/red.png' %}" }),
+            orangeIcon = new LeafIcon({ iconUrl: 'leaf-orange.png' });
 
         if (typeof (EventSource) !== "undefined") {
             var source = new EventSource("{% url 'random' %}");

@@ -28,6 +28,40 @@ import geocoder
 client = pymongo.MongoClient("mongodb+srv://"+str(os.getenv("USER"))+":"+str(os.getenv("PASSWORD"))+"@devcluster-qbbgy.mongodb.net/Sahyog?retryWrites=true&w=majority")
 db = client.Sahyog
 users = db.Location
+userData = db.UserData
+
+def card(request):
+    ph = request.POST.get('phNo')
+    ph2 = request.POST.get('ph')
+    print("hello")
+    data = userData.find()    
+    if ph:
+        flag = 0
+        user_pass = request.POST.get('user_pass')
+        for d in data:
+            print('{0} {1}'.format(d['phoneNo'],d['pwd']))        
+            if d['phoneNo']==ph and d['pwd']==user_pass:
+                flag = 1
+                print("Success")
+                request.session['userPh'] = ph
+                print(request.session['userPh'])
+                return render(request, 'myView/card.html')
+        if flag==0:
+            return render(request, 'myView/index.html')        
+     
+    elif ph2:
+        
+        pwd = request.POST.get('pwd')
+        temp = {"phoneNo": ph2, "pwd": pwd}
+        userData.insert_one(temp)
+        print(ph)
+        print(pwd)
+        return render(request, 'myView/card.html')
+    elif request.session['userPh']:
+        return render(request, 'myView/card.html') 
+    else:
+        return render(request, 'myView/index.html')    
+
 
 def timer(request):
    return render(request, 'myView/timer.html')
