@@ -21,9 +21,13 @@ Allows users to mark a place as Unsafe, and displays safer routes, with timer al
 
 ## Demo
 
-![Demo]()
-![Demo]()
-![Demo]()
+
+![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/3%20home.gif)
+
+![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/4%20safe%20routes.gif)
+![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/9%20contribute.gif)
+![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/6%20safety%20timer.gif)
+![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/8%20SOS.gif)
 
 -----------------------------------------------
 
