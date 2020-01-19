@@ -90,12 +90,12 @@ Hi {{ user.username }}!
                     <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'features' %}">Features</a>
+                    <a class="nav-link" href="{% url 'card' %}">Features</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'settings' %}">Settings</a>
                 </li>
-                <li style="margin-left: 1100px;" class="nav-item">
+                <li style="margin-left: 950px;" class="nav-item">
                     <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
                 </li>
             </ul>
@@ -105,7 +105,7 @@ Hi {{ user.username }}!
         <form id="reportcrime" action="{% url 'markUnsafe' %}" method="POST">
             {% csrf_token %}
             <p style="font-size: 25px; margin-top: 60px;">Enter a Location in the searchbox on map to mark it as
-                dangerous.</p>
+                unsafe.</p>
 
             <input class="form-control" style="margin-top: 20px;" type="text" name="location" id="location" readonly>
 

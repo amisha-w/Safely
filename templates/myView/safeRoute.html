@@ -49,16 +49,6 @@ Hi {{ user.username }}!
 </head>
 
 <style>
-    #mapid2info,
-    #mapid1info,
-    #mapid3info {
-        background-color: white;
-        color: black;
-        padding: 10px;
-        font-size: 15px;
-    }
-
-
     * {
         box-sizing: border-box;
     }
@@ -173,17 +163,17 @@ Hi {{ user.username }}!
             <div id="mapid1" class="panel-body" style="height: 100%;">
 
             </div>
-            <div id="mapid1info" class="panel-body" style="height: 100%;">nbsXdhbshbd</div>
+
         </div>
         <div class="column" style="background-color:#bbb;">
             <div id="mapid2" class="panel-body" style="height: 100%;">
             </div>
-            <div id="mapid2info" class="panel-body" style="height: 100%;">nmdfnm</div>
+
         </div>
         <div class="column" style="background-color:#ccc;">
             <div id="mapid3" class="panel-body" style="height: 100%;">
             </div>
-            <div id="mapid3info" class="panel-body" style="height: 100%;">dsfrdg</div>
+
         </div>
     </div>
 
@@ -432,6 +422,47 @@ Hi {{ user.username }}!
 
             });
         }
+
+        function calculateSafeRoute() {
+            var geocoderAPI = new HttpClient();
+
+            abc = 'https://route.ls.hereapi.com/routing/7.2/calculateroute.json?waypoint0=' + myloc1Lat + '%2C' + myloc1Long + '&waypoint1=' + myloc2Lat + '%2C' + myloc2Long + '&mode=fastest%3Bcar&alternatives=4&apiKey=N2AFSomTN5V2AoOG6_Lqq8lVFxaKO0uM4H-Y4Q0mWhU&avoidAreas=' + dangerCoods
+            geocoderAPI.get(abc, function (response) {
+                // do something with response
+                let result = JSON.parse(response);
+                console.log("Here maps res: ");
+                routes = result.response.route;
+
+
+                colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black'];
+                j = 0;
+                routes.forEach(function (item, index) {
+                    console.log(index);
+                    myroute = item.leg[0].maneuver;
+                    //console.log(myroute);
+                    latlngs = []
+                    storedRoutes[index] = myroute;
+                    myroute.forEach(function (item, index) {
+                        console.log(item.instruction);
+                        console.log(item.position.latitude + " , " + item.position.longitude)
+                        var routeMarker = new L.LatLng(item.position.latitude, item.position.longitude);
+                        //L.marker(routeMarker).addTo(mymap);
+                        latlngs.push([item.position.latitude, item.position.longitude])
+                        var polyline = L.polyline(latlngs, { color: colors[j] }).addTo(mymap);
+                        // zoom the map to the polyline
+                        mymap.fitBounds(polyline.getBounds());
+                    });
+
+                    j++;
+
+
+                });
+
+
+
+            });
+        }
+
         function showStoredRoutes() {
             var LeafIcon = L.Icon.extend({
                 options: {
@@ -513,6 +544,30 @@ Hi {{ user.username }}!
 
 
             }
+            var coodsLatChotu = [];
+            var coodsLngChotu = [];
+            if (typeof (EventSource) !== "undefined") {
+                var source = new EventSource("{% url 'random' %}");
+
+                source.onmessage = function (event) {
+
+                    console.log((JSON.parse(event.data)));
+                    JSON.parse(event.data).forEach((item, index) => {
+                        if (!coodsLatChotu.includes(item.lat) && !coodsLngChotu.includes(item.lng)) {
+                            console.log('nope');
+                            coodsLatChotu.push(item.lat);
+                            coodsLngChotu.push(item.lng);
+                            var temp = new L.LatLng(item.lat, item.lng);
+                            L.marker(temp, { icon: redIcon }).addTo(mymap1);
+
+                        }
+
+                    });
+
+                };
+            } else {
+                console.log("Error");
+            }
 
             //route2
             mymap2 = L.map('mapid2').setView(latlng, 13)
@@ -545,6 +600,31 @@ Hi {{ user.username }}!
 
 
 
+            }
+            var coodsLatChotu2 = [];
+            var coodsLngChotu2 = [];
+            if (typeof (EventSource) !== "undefined") {
+                var source = new EventSource("{% url 'random' %}");
+
+                source.onmessage = function (event) {
+
+                    console.log((JSON.parse(event.data)));
+                    JSON.parse(event.data).forEach((item, index) => {
+                        if (!coodsLatChotu2.includes(item.lat) && !coodsLngChotu2.includes(item.lng)) {
+                            console.log('nope');
+                            coodsLatChotu2.push(item.lat);
+                            coodsLngChotu2.push(item.lng);
+                            var temp = new L.LatLng(item.lat, item.lng);
+
+                            L.marker(temp, { icon: redIcon }).addTo(mymap2);
+
+                        }
+
+                    });
+
+                };
+            } else {
+                console.log("Error");
             }
 
             //route3
@@ -579,8 +659,8 @@ Hi {{ user.username }}!
 
 
             }
-            var coodsLatChotu = [];
-            var coodsLngChotu = [];
+            var coodsLatChotu3 = [];
+            var coodsLngChotu3 = [];
             if (typeof (EventSource) !== "undefined") {
                 var source = new EventSource("{% url 'random' %}");
 
@@ -588,13 +668,12 @@ Hi {{ user.username }}!
 
                     console.log((JSON.parse(event.data)));
                     JSON.parse(event.data).forEach((item, index) => {
-                        if (!coodsLatChotu.includes(item.lat) && !coodsLngChotu.includes(item.lng)) {
+                        if (!coodsLatChotu3.includes(item.lat) && !coodsLngChotu3.includes(item.lng)) {
                             console.log('nope');
-                            coodsLatChotu.push(item.lat);
-                            coodsLngChotu.push(item.lng);
+                            coodsLatChotu3.push(item.lat);
+                            coodsLngChotu3.push(item.lng);
                             var temp = new L.LatLng(item.lat, item.lng);
-                            L.marker(temp, { icon: redIcon }).addTo(mymap1);
-                            L.marker(temp, { icon: redIcon }).addTo(mymap2);
+
                             L.marker(temp, { icon: redIcon }).addTo(mymap3);
                         }
 

@@ -80,7 +80,7 @@ def SOS(request):
         to = i
         client = Client(os.getenv('TWILIO_ACCOUNT_SID'), os.getenv('TWILIO_AUTH_TOKEN'))
         response = client.messages.create(
-        body='helo it me :)'+'http://www.google.com/maps/place/21.186,72.7641', 
+        body='This is to inform you that your ward/friend is in danger and awaits your help. Access their location using the following link'+'http://www.google.com/maps/place/21.186,72.7641', 
         to=to, from_=os.getenv('TWILIO_PHONE_NUMBER'))
 
     return render(request, 'myView/sos.html')
