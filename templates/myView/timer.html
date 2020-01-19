@@ -64,9 +64,19 @@
             stop();
             document.getElementById('SOSForm').submit();
         }
+        if (min >= 1 && min <= 2) {
+            console.log(min);
+            beep();
+
+        }
         document.getElementById("sec").innerHTML = sec;
         document.getElementById("time").innerHTML = timeElapsed;
         document.getElementById("min").innerHTML = min;
+    }
+    function beep() {
+
+        var audio = new Audio("{% static 'beep.mp3'%}");
+        audio.play();
     }
     function start() {
         //call the first setInterval
