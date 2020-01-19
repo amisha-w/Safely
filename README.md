@@ -1,5 +1,7 @@
 # `Safely`
 
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 Safely helps women to navigate routes in a safe manner by providing three main features: 
 
 - [ x ] Safe routes
@@ -37,6 +39,7 @@ Allows users to mark a place as Unsafe, and displays safer routes, with timer al
 ### API Integrations
 
 
+* [Get the Leaflet JS CDN](https://leafletjs.com/)
 * [ Get the HERE Maps app code and app id ](https://developer.here.com/c/mapAPIs?cid=Other-Google-MM-T4-Dev-Brand-E&utm_source=Google&utm_medium=ppc&utm_campaign=Dev_PaidSearch_DevPortal_AlwaysOn&gclid=CjwKCAiAh5_uBRA5EiwASW3IaplFdLkFaSmTyjhYPlNGVZLHpIdJ8wmXqqaPy1JkK6OucFfYFrWLwhoC6F4QAvD_BwE&gclsrc=aw.ds)
 
 Setup project environment with virtualenv and pip.
@@ -66,6 +69,7 @@ Create Mongo Collections for:
 
 * [Django](https://www.djangoproject.com)
 * [HEREMaps](https://developer.here.com/c/mapAPIs?cid=Other-Google-MM-T4-Dev-Brand-E&utm_source=Google&utm_medium=ppc&utm_campaign=Dev_PaidSearch_DevPortal_AlwaysOn&gclid=CjwKCAiAh5_uBRA5EiwASW3IaplFdLkFaSmTyjhYPlNGVZLHpIdJ8wmXqqaPy1JkK6OucFfYFrWLwhoC6F4QAvD_BwE&gclsrc=aw.ds) - The MAPs API
+* [LeafletJS](https://leafletjs.com/)
 
 -----------------------------------------------
 ## Future Enhancements
