@@ -64,14 +64,24 @@
             stop();
             document.getElementById('SOSForm').submit();
         }
-          if (min >=1 && min<=2) {
+
+        if (min >= 1 && min <= 2) {
             console.log(min);
             beep();
+
+
+        
          
+
         }
         document.getElementById("sec").innerHTML = sec;
         document.getElementById("time").innerHTML = timeElapsed;
         document.getElementById("min").innerHTML = min;
+    }
+    function beep() {
+
+        var audio = new Audio("{% static 'beep.mp3'%}");
+        audio.play();
     }
     function start() {
         //call the first setInterval
@@ -122,7 +132,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'settings' %}">Settings</a>
                 </li>
-                <li style="margin-left: 1100px;" class="nav-item">
+                <li style="margin-left: 950px;" class="nav-item">
                     <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
                 </li>
             </ul>
