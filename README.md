@@ -4,9 +4,9 @@
 
 Safely helps women to navigate routes in a safe manner by providing three main features: 
 
-- [ x ] Safe routes
-- [ x ] Safety Timer alert
-- [ x ] SOS alerts to near ones
+- Safe routes
+- Safety Timer alert
+- SOS alerts to near ones
 
 Allows users to mark a place as Unsafe, and displays safer routes, with timer alerts for emergency
 
