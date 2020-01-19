@@ -1,70 +1,85 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
+
 <head>
-    <title>Safely</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'style.css'%}">
+  <title>Safely</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{% static 'style.css'%}">
 </head>
+
 <body>
 
-    <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
-        <!-- Navbar content -->
-        <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'features' %}">Features</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="{% url 'settings' %}">Settings</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-<div class="container" >
-  
-<div class="settings">
-    <h2>Account Settings</h2>
-    <hr style="border: 1px solid silver;">
-    <table class="table">
+  <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
+    <!-- Navbar content -->
+    <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'card' %}">Features</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'settings' %}">Settings</a>
+        </li>
+        <li style="margin-left: 950px;" class="nav-item">
+          <a class="btn" href="{% url 'markUnsafe' %}">Contribute</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+
+    <div class="settings">
+      <h2>Account Settings</h2>
+      <hr style="border: 1px solid silver;">
+      <table class="table">
         <thead>
         </thead>
         <tbody>
           <tr>
-              <!-- add to beginning of td's -->
+            <!-- add to beginning of td's -->
             <th style="padding:30px" scope="row">Emergency Contacts</th>
             <td id="names" style="padding:30px;">
-                <input readonly  type="text" class="input" value="Amisha Waghela"><br><br>
-                <form method="post">
-                    <div class="collapse" id="editName" style="width: 50%;">
-                        <input   type="text" class="form-control" placeholder="Name"><br>
-                    <input  type="tel" class="form-control" placeholder="Phone Number" name="phone"  pattern="[0-9]{10}" ><br>
-                    <button class="btn btn-primary">Save</button>
-                    </div>
-                </form>
+              <input readonly type="text" class="input" value="Amisha Waghela"><br><br>
+              <form method="post">
+                <div class="collapse" id="editName" style="width: 50%;">
+                  <input type="text" class="form-control" placeholder="Name"><br>
+                  <input type="tel" class="form-control" placeholder="Phone Number" name="phone"
+                    pattern="[0-9]{10}"><br>
+                  <button class="btn btn-primary">Save</button>
+                </div>
+              </form>
             </td>
             <td id="nos" style="padding:30px;">
-                <input readonly  type="tel" class="input "   pattern="[0-9]{10}" value="+91 9987718876"><br><br>
+              <input readonly type="tel" class="input " pattern="[0-9]{10}" value="+91 9987718876"><br><br>
             </td>
-            <td style="padding:30px"><img src="{% static 'add.svg'%}" data-toggle="collapse" data-target="#editName" class="edit"></td>
-            
+            <td style="padding:30px"><img src="{% static 'add.svg'%}" data-toggle="collapse" data-target="#editName"
+                class="edit"></td>
+
           </tr>
-          
-         
-          
+
+
+
         </tbody>
-    </table>
+      </table>
+    </div>
+    <br><br>
   </div>
-  <br><br>
-</div>
 </body>
+
 </html>

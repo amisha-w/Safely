@@ -41,20 +41,39 @@ Hi {{ user.username }}!
     });
   });
   function myFunction() {
-    var txt;
-    var otp = prompt("Please the OTP:", "");
-    if (otp == null || otp == "") {
-      txt = "Re-submit details.";
-    } else {
-      txt = "";
-    }
-    document.getElementById("otpwarn").innerHTML = txt;
-    document.getElementById("otpwarn").style.color = "red";
+
+    var $form = $("#mysignup"),
+      url = $form.attr('action');
+    var paramArr = $("#mysignup").serializeArray();
+    // paramArr.push({ name: "ph", value: "lalala" });
+
+    $.post(url, $.param(paramArr), function (result) {
+      alert('success');
+    });
+    return false;
+
+
+
+  }
+  function myFunction2() {
+
+    var $form = $("#myloginForm"),
+      url = $form.attr('action');
+    var paramArr = $("#myloginForm").serializeArray();
+    // paramArr.push({ name: "ph", value: "lalala" });
+
+    $.post(url, $.param(paramArr), function (result) {
+      alert('success');
+    });
+    return false;
+
+
+
   }
 </script>
 
 <body>
-  
+
   <nav class="navbar navbar-expand navbar-light" style="background-color: #fff;">
     <!-- Navbar content -->
     <a class="navbar-brand " style="color: #EF0A61;">Safely</a>
@@ -65,7 +84,7 @@ Hi {{ user.username }}!
           <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'features' %}">Features</a>
+          <a class="nav-link" href="{% url 'card' %}">Features</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'settings' %}">Settings</a>
@@ -95,11 +114,11 @@ Hi {{ user.username }}!
 
       <div class="tabs-content">
         <div id="signup-tab-content" class="active">
-          <form class="signup-form" action="" method="post">
+          <form class="signup-form" action="{% url 'card' %}" method="post" id="mysignup">
             {% csrf_token %}
-            <input type="tel" class="input " placeholder="Phone" name="phone2" pattern="[0-9]{10}" required>
+            <input type="tel" class="input " placeholder="Phone" name="ph" id="ph" pattern="[0-9]{10}" required>
             <!-- <input type="tel" class="input " placeholder="OTP" name="otp"  pattern="[0-9]" required> -->
-            <input type="Password" class="input" placeholder="Password" name="password2" required>
+            <input type="Password" class="input" placeholder="Password" name="pwd" id="pwd" required>
             <input type="submit" onclick="myFunction()" class="btn" value="Sign Up">
           </form>
           <!--.login-form-->
@@ -111,12 +130,13 @@ Hi {{ user.username }}!
         <!--.signup-tab-content-->
 
         <div id="login-tab-content">
-          <form class="login-form" action="" method="post">
+          <form class="login-form" action="{% url 'card' %}" method="post" id="myloginForm">
             {% csrf_token %}
-            <input type="tel" class="input " placeholder="Phone" name="phone1" pattern="[0-9]{10}" required>
-            <input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
+            <input type="tel" class="input" placeholder="Phone" name="phNo" id="phNo" pattern="[0-9]{10}" required>
+            <input type="password" class="input" name="user_pass" id="user_pass" autocomplete="off"
+              placeholder="Password">
 
-            <input type="submit" class="btn" value="Login">
+            <input type="submit" onclick="myFunction2()" class="btn" value="Login">
           </form>
           <!--.login-form-->
           <div class="help-text">

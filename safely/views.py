@@ -28,6 +28,40 @@ import geocoder
 client = pymongo.MongoClient("mongodb+srv://"+str(os.getenv("USER"))+":"+str(os.getenv("PASSWORD"))+"@devcluster-qbbgy.mongodb.net/Sahyog?retryWrites=true&w=majority")
 db = client.Sahyog
 users = db.Location
+userData = db.UserData
+
+def card(request):
+    ph = request.POST.get('phNo')
+    ph2 = request.POST.get('ph')
+    print("hello")
+    data = userData.find()    
+    if ph:
+        flag = 0
+        user_pass = request.POST.get('user_pass')
+        for d in data:
+            print('{0} {1}'.format(d['phoneNo'],d['pwd']))        
+            if d['phoneNo']==ph and d['pwd']==user_pass:
+                flag = 1
+                print("Success")
+                request.session['userPh'] = ph
+                print(request.session['userPh'])
+                return render(request, 'myView/card.html')
+        if flag==0:
+            return render(request, 'myView/index.html')        
+     
+    elif ph2:
+        
+        pwd = request.POST.get('pwd')
+        temp = {"phoneNo": ph2, "pwd": pwd}
+        userData.insert_one(temp)
+        print(ph)
+        print(pwd)
+        return render(request, 'myView/card.html')
+    elif request.session['userPh']:
+        return render(request, 'myView/card.html') 
+    else:
+        return render(request, 'myView/index.html')    
+
 
 def timer(request):
    return render(request, 'myView/timer.html')
@@ -46,12 +80,10 @@ def SOS(request):
         to = i
         client = Client(os.getenv('TWILIO_ACCOUNT_SID'), os.getenv('TWILIO_AUTH_TOKEN'))
         response = client.messages.create(
-        body='helo it me :)'+'http://www.google.com/maps/place/21.186,72.7641', 
+        body='This is to inform you that your ward/friend is in danger and awaits your help. Access their location using the following link'+'http://www.google.com/maps/place/21.186,72.7641', 
         to=to, from_=os.getenv('TWILIO_PHONE_NUMBER'))
 
     return render(request, 'myView/sos.html')
-
-
 
 
 
@@ -86,7 +118,7 @@ def markUnsafe(request):
         load_dotenv()        
         location = {"lat": lat, "lng": lng, "location": location }
         users.insert_one(location)        
-        return HttpResponse(json.dumps({'status':'success','latitude':lat,'longitude':lng}),content_type='application/json')
+        return render(request, 'myView/card.html')
     else:
         return render(request, 'myView/markUnsafe.html')
 
