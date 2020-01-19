@@ -21,12 +21,16 @@ Allows users to mark a place as Unsafe, and displays safer routes, with timer al
 
 ## Demo
 
+Home- signup/login to landing page
 
 ![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/3%20home.gif)
-
+SafeRoute: routes alterative paths from A to B,avoiding Unsafe Places, and traversing near shops, restaurants etc that are opened at that time.
 ![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/4%20safe%20routes.gif)
+Contribution- Users can report or mark an  area as unsafe describing their negative experience related to a place.
 ![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/9%20contribute.gif)
+Safety Timer. A timer, when reaches a threshold, sends SOS alerts to authorities and near ones. User can use this timer in uncertainty.
 ![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/6%20safety%20timer.gif)
+SOS feature sends SOS alerts and location of user to authorities as well as near ones.
 ![Demo](https://github.com/amisha-w/dotSafely/blob/master/gifs/8%20SOS.gif)
 
 -----------------------------------------------
