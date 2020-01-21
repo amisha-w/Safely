@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./dotSafely/static/women-rights.svg" width="200px"></img>
+  <img src="./dotSafely/static/women-rights.svg" width="200px" height="250px"></img>
 
 # `Safely`
 
