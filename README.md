@@ -111,7 +111,7 @@ Create Mongo Collections for:
 
 -----------------------------------------------
 
-### This project done under 30-hours from scratch with no preparation at `Dotslash 3.0 hackathon`, conducted by SVNIT, Surat and secured a `Special Mention in the All-Women's Category for hacking the theme Women's Safety`
+ This project was developed under 30-hours from scratch at `Dotslash 3.0 hackathon`, conducted by SVNIT, Surat and secured a `Special Mention in the All-Women's Category for hacking the theme Women's Safety`
 
 -----------------------------------------------
 
