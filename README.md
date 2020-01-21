@@ -13,7 +13,7 @@ Allows users to mark a place as Unsafe, and displays safer routes, with timer al
 -----------------------------------------------
 ## How it Works
 
-* We use `CROWSOURCED` Reviews of people marking a place as unsafe and  `GeoJSON Data` of Cities which inform about the shops, restaurants etc that are open along the route between source to destination
+* We use `CROWDSOURCED` Reviews of people marking a place as unsafe and  `GeoJSON Data` of Cities which inform about the shops, restaurants etc that are open along the route between source to destination
 
 * Based on this parameters, we render two or three safest routes possible among multiple routes such that the unsafe zones are avoided and active zones are included
 -----------------------------------------------
