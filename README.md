@@ -1,10 +1,10 @@
 <div align="center">
-  <img src=".dotSafely/static/women-rights.svg" width="200px"></img>
+  <img src="./dotSafely/static/women-rights.svg" width="200px"></img>
 
 # `Safely`
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-
+</div> 
 Safely helps women to navigate routes in a safe manner by providing three main features: 
 
 - Safe routes
