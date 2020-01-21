@@ -1,3 +1,6 @@
+<div align="center">
+  <img src=".dotSafely/static/women-rights.svg" width="200px"></img>
+
 # `Safely`
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
