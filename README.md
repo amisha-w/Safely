@@ -86,12 +86,7 @@ Create Mongo Collections for:
 
 
 
------------------------------------------------
-## Built With
 
-* [Django](https://www.djangoproject.com)
-* [HEREMaps](https://developer.here.com/c/mapAPIs?cid=Other-Google-MM-T4-Dev-Brand-E&utm_source=Google&utm_medium=ppc&utm_campaign=Dev_PaidSearch_DevPortal_AlwaysOn&gclid=CjwKCAiAh5_uBRA5EiwASW3IaplFdLkFaSmTyjhYPlNGVZLHpIdJ8wmXqqaPy1JkK6OucFfYFrWLwhoC6F4QAvD_BwE&gclsrc=aw.ds) - The MAPs API
-* [LeafletJS](https://leafletjs.com/)
 
 -----------------------------------------------
 ## Future Enhancements
@@ -116,9 +111,7 @@ Create Mongo Collections for:
 
 -----------------------------------------------
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+### This project done under 30-hours from scratch with no preparation at `Dotslash 3.0 hackathon`, conducted by SVNIT, Surat and secured a `Special Mention in the All-Women's Category for hacking the theme Women's Safety`
 
 -----------------------------------------------
 
