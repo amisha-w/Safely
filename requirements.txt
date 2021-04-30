@@ -20,7 +20,7 @@ requests==2.22.0
 six==1.13.0
 sqlparse==0.2.4
 twilio==6.35.2
-urllib3==1.25.7
+urllib3==1.25.8
 Babel==2.8.0
 bson==0.5.8
 certifi==2019.11.28
@@ -48,4 +48,4 @@ requests==2.22.0
 six==1.13.0
 sqlparse==0.2.4
 twilio==6.35.2
-urllib3==1.25.7
+urllib3==1.25.8
