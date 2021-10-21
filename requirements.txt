@@ -1,4 +1,4 @@
-Babel==2.8.0
+Babel==2.9.1
 bson==0.5.8
 certifi==2019.11.28
 chardet==3.0.4
@@ -21,7 +21,7 @@ six==1.13.0
 sqlparse==0.2.4
 twilio==6.35.2
 urllib3==1.25.7
-Babel==2.8.0
+Babel==2.9.1
 bson==0.5.8
 certifi==2019.11.28
 chardet==3.0.4
