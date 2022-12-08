@@ -1,6 +1,6 @@
 Babel==2.8.0
 bson==0.5.8
-certifi==2019.11.28
+certifi==2022.12.7
 chardet==3.0.4
 dataclasses==0.6
 Django==2.2.9
@@ -23,7 +23,7 @@ twilio==6.35.2
 urllib3==1.25.7
 Babel==2.8.0
 bson==0.5.8
-certifi==2019.11.28
+certifi==2022.12.7
 chardet==3.0.4
 Click==7.0
 dataclasses==0.6
